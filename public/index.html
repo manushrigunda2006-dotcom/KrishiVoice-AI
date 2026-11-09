@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="kn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d2c">
+  <meta name="description" content="KrishiVoice AI - Kannada-first voice access to reviewed farming information.">
+  <title>KrishiVoice AI | ನಿಮ್ಮ ಕೃಷಿ, ನಿಮ್ಮ ಧ್ವನಿ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">ಕೃ</span><span>KrishiVoice <b>AI</b><small>ನಿಮ್ಮ ಕೃಷಿ, ನಿಮ್ಮ ಧ್ವನಿ</small></span></a>
+    <nav><a href="#how">ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ</a><a href="#about">ನಮ್ಮ ಬಗ್ಗೆ</a><button class="lang" id="languageToggle">ಕನ್ನಡ / EN</button></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> KANNADA-FIRST FARMING ASSISTANT</div>
+        <h1>ನಿಮ್ಮ ಕೃಷಿ.<br><em>ನಿಮ್ಮ ಧ್ವನಿ.</em></h1>
+        <p class="lead">ಕೃಷಿ ಮಾಹಿತಿಯನ್ನು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಕೇಳಿ. ಮಾತನಾಡಿ, ಪ್ರಶ್ನೆ ಕೇಳಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿದ ಮಾರ್ಗದರ್ಶನ ಪಡೆಯಿರಿ.</p>
+        <div class="hero-actions"><a class="primary-btn" href="#assistant">ಮಾತನಾಡಲು ಪ್ರಾರಂಭಿಸಿ <span>↗</span></a><span class="trust-note">ಸರಳ • ಧ್ವನಿ ಆಧಾರಿತ • ಕನ್ನಡ</span></div>
+        <div class="hero-stats"><div><b>ಕನ್ನಡ</b><span>ಮೊದಲ ಆದ್ಯತೆ</span></div><div><b>ಧ್ವನಿ</b><span>ಸುಲಭ ಸಂವಹನ</span></div><div><b>ಮೂಲಗಳು</b><span>ಪರಿಶೀಲಿಸಿದ ಮಾಹಿತಿ</span></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+        <div class="field-lines"></div>
+        <div class="floating-card"><span class="leaf-icon">✳</span><div><b>ಕೃಷಿ ಮಾಹಿತಿ</b><small>ನಿಮ್ಮ ಕೈಯಲ್ಲಿ, ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ</small></div><span class="pulse-dot"></span></div>
+        <div class="art-caption">GROW WITH KNOWLEDGE <span>01 / 03</span></div>
+      </div>
+    </section>
+
+    <section class="assistant-section" id="assistant">
+      <div class="section-heading"><div><div class="eyebrow">YOUR FARMING COMPANION</div><h2>ಇಂದು ಏನು ತಿಳಿಯಬೇಕು?</h2><p>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ ಅಥವಾ ಟೈಪ್ ಮಾಡಿ.</p></div><div class="online-pill"><span></span> ಸಹಾಯಕ ಸಿದ್ಧವಾಗಿದೆ</div></div>
+      <div class="assistant-grid">
+        <div class="ask-card">
+          <div class="card-top"><span class="step-number">01</span><span>ನಿಮ್ಮ ಪ್ರಶ್ನೆ</span><span class="mic-label">VOICE / TEXT</span></div>
+          <div class="mic-area">
+            <button id="recordBtn" class="mic-button" aria-label="Start recording"><span class="mic-ring"></span><span class="mic-symbol">🎙</span></button>
+            <b id="recordTitle">ಮಾತನಾಡಲು ಒತ್ತಿರಿ</b>
+            <small id="recordHint">ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ</small>
+            <div class="recording-bars" id="recordingBars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <label class="input-label" for="question">ಅಥವಾ ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ</label>
+          <textarea id="question" rows="3" placeholder="ಉದಾ: ಮಣ್ಣಿನ ಆರೋಗ್ಯವನ್ನು ಹೇಗೆ ಸುಧಾರಿಸಬಹುದು?"></textarea>
+          <div class="ask-footer"><span id="apiStatus">ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…</span><button id="askBtn" class="ask-button">ಉತ್ತರ ಪಡೆಯಿರಿ <span>→</span></button></div>
+          <div class="suggestions"><span>ಉದಾಹರಣೆಗಳು</span><button data-question="ಮಣ್ಣಿನ ಆರೋಗ್ಯವನ್ನು ಹೇಗೆ ಸುಧಾರಿಸಬಹುದು?">ಮಣ್ಣಿನ ಆರೋಗ್ಯ</button><button data-question="ಬೆಳೆಗಳಿಗೆ ನೀರಾವರಿ ಹೇಗೆ ಮಾಡಬೇಕು?">ನೀರಾವರಿ</button><button data-question="ಬೆಳೆಗಳಲ್ಲಿ ಕೀಟ ಕಂಡರೆ ಏನು ಮಾಡಬೇಕು?">ಕೀಟ ನಿರ್ವಹಣೆ</button></div>
+        </div>
+        <div class="answer-card">
+          <div class="card-top"><span class="step-number">02</span><span>ನಿಮ್ಮ ಉತ್ತರ</span><span class="answer-status" id="answerStatus">WAITING</span></div>
+          <div id="emptyAnswer" class="empty-answer"><div class="answer-illustration">✳</div><h3>ನಿಮ್ಮ ಉತ್ತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ</h3><p>ಮೊದಲು ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ. ನಿಮಗೆ ಅರ್ಥವಾಗುವ ಸರಳ ಭಾಷೆಯಲ್ಲಿ ಮಾಹಿತಿ ನೀಡಲು ನಾವು ಪ್ರಯತ್ನಿಸುತ್ತೇವೆ.</p></div>
+          <div id="answerContent" class="answer-content" hidden>
+            <div class="answer-label">KRISHIVOICE SUGGESTS</div>
+            <p id="answerText" class="answer-text"></p>
+            <div id="answerEnglish" class="answer-english" hidden></div>
+            <div class="source-box"><span>ಮಾಹಿತಿಯ ಮೂಲ</span><a id="sourceLink" target="_blank" rel="noopener">Source</a></div>
+            <p id="safetyText" class="safety-text"></p>
+          </div>
+          <div class="answer-bottom"><span>ಕೃಷಿ ಸಲಹೆಗಾರರ ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿರುವ ಸಂದರ್ಭಗಳಿವೆ.</span><button id="speakBtn" disabled>🔊 ಕೇಳಿ</button></div>
+        </div>
+      </div>
+      <p class="disclaimer">ಗಮನಿಸಿ: ಇದು ಮಾಹಿತಿ ಸಹಾಯಕ ಮಾತ್ರ. ಕೀಟನಾಶಕದ ಪ್ರಮಾಣ, ಔಷಧಿ ಅಥವಾ ಬೆಳೆ ಚಿಕಿತ್ಸೆಯ ನಿರ್ಧಾರಕ್ಕೆ ಸ್ಥಳೀಯ ಕೃಷಿ ತಜ್ಞರ ಸಲಹೆ ಪಡೆಯಿರಿ.</p>
+    </section>
+
+    <section class="how-section" id="how">
+      <div class="eyebrow">SIMPLE BY DESIGN</div><h2>ಮೂರು ಸುಲಭ ಹಂತಗಳು.</h2>
+      <div class="steps"><article><span>01</span><div class="step-icon">🎙</div><h3>ಮಾತನಾಡಿ</h3><p>ನಿಮ್ಮ ಕೃಷಿ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ ಅಥವಾ ಟೈಪ್ ಮಾಡಿ.</p></article><article><span>02</span><div class="step-icon">✦</div><h3>ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ</h3><p>Gnani AI Prisma ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಪಠ್ಯವಾಗಿ ಪರಿವರ್ತಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.</p></article><article><span>03</span><div class="step-icon">🌱</div><h3>ಮಾಹಿತಿ ಪಡೆಯಿರಿ</h3><p>ಪರಿಶೀಲಿಸಿದ ಕೃಷಿ ಮಾಹಿತಿಯಿಂದ ಸರಳ ಉತ್ತರ ಮತ್ತು ಮೂಲಗಳನ್ನು ನೋಡಿ.</p></article></div>
+    </section>
+
+    <section class="about-strip" id="about"><div><div class="eyebrow">BUILT FOR BHARAT</div><h2>ತಂತ್ರಜ್ಞಾನ ಎಲ್ಲರಿಗೂ ತಲುಪಬೇಕು.</h2><p>KrishiVoice AI ಒಂದು ವಿದ್ಯಾರ್ಥಿ ನಿರ್ಮಿತ ಪ್ರೋಟೋಟೈಪ್. ಕನ್ನಡದಲ್ಲಿ ಕೃಷಿ ಮಾಹಿತಿಯನ್ನು ಸುಲಭವಾಗಿ ಪಡೆಯುವ ಅನುಭವವನ್ನು ಪರೀಕ್ಷಿಸುವುದು ನಮ್ಮ ಉದ್ದೇಶ.</p></div><div class="about-mark">ಕೃ<span>✳</span></div></section>
+  </main>
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">ಕೃ</span><span>KrishiVoice <b>AI</b><small>ನಿಮ್ಮ ಕೃಷಿ, ನಿಮ್ಮ ಧ್ವನಿ</small></span></a><span>Student prototype · Built with care for farmers</span><span>© 2026 KrishiVoice AI</span></footer>
+  <script src="/script.js"></script>
+</body>
+</html>

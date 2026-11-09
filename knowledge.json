@@ -1,0 +1,42 @@
+[
+  {
+    "keywords": ["ಮಣ್ಣಿನ ಆರೋಗ್ಯ", "soil health", "soil", "ಮಣ್ಣು"],
+    "answerKn": "ಮಣ್ಣಿನ ಆರೋಗ್ಯ ತಿಳಿಯಲು ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ ಮಾಡಿಸುವುದು ಉತ್ತಮ. ಪರೀಕ್ಷೆಯ ಫಲಿತಾಂಶದ ಆಧಾರದ ಮೇಲೆ ಮಾತ್ರ ಗೊಬ್ಬರ ಬಳಸಿ. ಬೆಳೆ ಪರಿವರ್ತನೆ, ಸಾವಯವ ಪದಾರ್ಥಗಳ ಸಮರ್ಪಕ ಬಳಕೆ ಮತ್ತು ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಾಪಾಡುವುದು ಸಹಾಯ ಮಾಡಬಹುದು.",
+    "answerEn": "A soil test is the best starting point for understanding soil health. Use fertilisers based on the test results. Crop rotation, suitable organic matter and moisture conservation can also help.",
+    "source": "General soil-health guidance. Verify locally before making farm decisions.",
+    "sourceUrl": "https://soilhealth.dac.gov.in/",
+    "safety": "Fertiliser quantities depend on the crop and soil-test result. Do not guess the dose."
+  },
+  {
+    "keywords": ["ನೀರಾವರಿ", "irrigation", "ನೀರು", "water"],
+    "answerKn": "ನೀರಾವರಿಯನ್ನು ಬೆಳೆ, ಮಣ್ಣಿನ ಪ್ರಕಾರ ಮತ್ತು ಹವಾಮಾನಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಯೋಜಿಸಿ. ಹೊಲದಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ನೋಡಿಕೊಳ್ಳಿ. ಸಾಧ್ಯವಾದಲ್ಲಿ ಹನಿ ನೀರಾವರಿ ಅಥವಾ ಮಣ್ಣಿನ ತೇವಾಂಶ ಪರಿಶೀಲನೆ ಬಳಸಿ.",
+    "answerEn": "Plan irrigation according to the crop, soil type and weather. Avoid waterlogging. Where practical, consider drip irrigation and check soil moisture before watering.",
+    "source": "General irrigation guidance. Local crop-specific advice is recommended.",
+    "sourceUrl": "https://pmksy.gov.in/",
+    "safety": "Water requirements vary by crop stage and local conditions."
+  },
+  {
+    "keywords": ["ಬೆಳೆ ಪರಿವರ್ತನೆ", "crop rotation", "rotation"],
+    "answerKn": "ಒಂದೇ ಹೊಲದಲ್ಲಿ ನಿರಂತರವಾಗಿ ಒಂದೇ ಬೆಳೆಯನ್ನು ಬೆಳೆಸುವುದಕ್ಕಿಂತ, ಸ್ಥಳೀಯ ಪರಿಸ್ಥಿತಿಗೆ ಹೊಂದುವ ವಿಭಿನ್ನ ಕುಟುಂಬದ ಬೆಳೆಗಳನ್ನು ಪರ್ಯಾಯವಾಗಿ ಬೆಳೆಸುವ ಬಗ್ಗೆ ಕೃಷಿ ಅಧಿಕಾರಿಯಿಂದ ಸಲಹೆ ಪಡೆಯಿರಿ. ಇದು ಕೆಲವು ಕೀಟ ಮತ್ತು ಮಣ್ಣಿನ ಸಮಸ್ಯೆಗಳನ್ನು ಕಡಿಮೆ ಮಾಡಲು ಸಹಾಯ ಮಾಡಬಹುದು.",
+    "answerEn": "Instead of repeatedly growing the same crop, ask a local agriculture officer about rotating suitable crops from different plant families. This can help manage some pest and soil problems.",
+    "source": "General crop-rotation guidance. Confirm crop choices locally.",
+    "sourceUrl": "https://www.icar.gov.in/",
+    "safety": "Suitable rotation depends on the region, season, water availability and market."
+  },
+  {
+    "keywords": ["ಕೀಟ", "pest", "ಹುಳು", "insect"],
+    "answerKn": "ಕೀಟ ಕಂಡುಬಂದರೆ ಮೊದಲು ಯಾವ ಕೀಟ ಮತ್ತು ಯಾವ ಬೆಳೆ ಎಂಬುದನ್ನು ಸರಿಯಾಗಿ ಗುರುತಿಸಿ. ಎಲೆಗಳ ಎರಡೂ ಬದಿಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಹಾನಿಯ ಚಿತ್ರವನ್ನು ಸ್ಥಳೀಯ ಕೃಷಿ ಅಧಿಕಾರಿಗೆ ತೋರಿಸಿ. ಗುರುತಿಸದೆ ಕೀಟನಾಶಕ ಸಿಂಪಡಿಸಬೇಡಿ.",
+    "answerEn": "If you notice pests, first identify the pest and crop correctly. Inspect both sides of leaves and show photos of the damage to a local agriculture officer. Do not spray pesticides before identification.",
+    "source": "General integrated pest-management guidance. Seek crop-specific expert advice.",
+    "sourceUrl": "https://niphm.gov.in/",
+    "safety": "This assistant does not diagnose pests or prescribe pesticide products or dosages."
+  },
+  {
+    "keywords": ["ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ", "soil test", "ಪರೀಕ್ಷೆ"],
+    "answerKn": "ನಿಮ್ಮ ಹತ್ತಿರದ ಮಣ್ಣು ಪರೀಕ್ಷಾ ಪ್ರಯೋಗಾಲಯ ಅಥವಾ ಕೃಷಿ ಇಲಾಖೆಯನ್ನು ಸಂಪರ್ಕಿಸಿ. ಹೊಲದ ವಿವಿಧ ಭಾಗಗಳಿಂದ ಸೂಚಿಸಿದ ವಿಧಾನದಲ್ಲಿ ಮಣ್ಣಿನ ಮಾದರಿ ಸಂಗ್ರಹಿಸಿ. ವರದಿ ಬಂದ ನಂತರ ಅದರ ಶಿಫಾರಸಿನಂತೆ ಕ್ರಮ ಕೈಗೊಳ್ಳಿ.",
+    "answerEn": "Contact a nearby soil-testing laboratory or agriculture department. Collect samples from different parts of the field using their recommended method. Follow the recommendations in the test report.",
+    "source": "Government of India's Soil Health Card portal",
+    "sourceUrl": "https://soilhealth.dac.gov.in/",
+    "safety": "Follow the laboratory's sample collection instructions."
+  }
+]
