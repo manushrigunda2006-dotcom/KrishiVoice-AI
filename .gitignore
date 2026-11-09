@@ -7,3 +7,5 @@ tmp/
 *.mp3
 .DS_Store
 npm-debug.log
+
+.vercel
