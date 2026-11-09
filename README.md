@@ -2,6 +2,9 @@
 ### AI-Powered Multilingual Agricultural Intelligence Platform
 **Tagline:** "ನಿಮ್ಮ ಕೃಷಿ. ನಿಮ್ಮ ಧ್ವನಿ. ನಿಮ್ಮ ಭವಿಷ್ಯ." *(Your Farm. Your Voice. Your Future.)*
 
+🌐 **Live Production URL:** [https://krishivoice-ai.vercel.app](https://krishivoice-ai.vercel.app)  
+📦 **GitHub Repository:** [https://github.com/manushrigunda2006-dotcom/KrishiVoice-AI](https://github.com/manushrigunda2006-dotcom/KrishiVoice-AI)
+
 ---
 
 ## Overview
