@@ -8,9 +8,11 @@ const { execFile } = require("child_process");
 const app = express();
 
 // Ensure temporary storage directory exists
-const tmpDir = path.join(__dirname, "tmp");
+const tmpDir = process.env.VERCEL ? "/tmp" : path.join(__dirname, "tmp");
 if (!fs.existsSync(tmpDir)) {
-  fs.mkdirSync(tmpDir, { recursive: true });
+  try {
+    fs.mkdirSync(tmpDir, { recursive: true });
+  } catch (_) {}
 }
 
 const upload = multer({
@@ -365,7 +367,11 @@ app.post("/api/ask", (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`🌾 KrishiVoice AI 2.0 running at http://localhost:${port}`);
-  console.log(`📡 Gnani STT Status: ${process.env.GNANI_API_KEY ? "CONFIGURED" : "DEMO / BROWSER FALLBACK MODE"}`);
-});
+if (!process.env.VERCEL && process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`🌾 KrishiVoice AI 2.0 running at http://localhost:${port}`);
+    console.log(`📡 Gnani STT Status: ${process.env.GNANI_API_KEY ? "CONFIGURED" : "DEMO / BROWSER FALLBACK MODE"}`);
+  });
+}
+
+module.exports = app;
