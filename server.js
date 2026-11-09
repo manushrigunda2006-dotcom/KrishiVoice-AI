@@ -275,7 +275,7 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
 app.post("/api/tts", async (req, res) => {
   const text = String(req.body.text || "").trim();
   const language = req.body.language || "kn";
-  const voice = req.body.voice || process.env.GNANI_TTS_VOICE || "Nalini";
+  const voice = req.body.voice || process.env.GNANI_TTS_VOICE || "Lakshmi";
 
   if (!text) {
     return res.status(400).json({ error: "Text is required for TTS synthesis." });

@@ -10,7 +10,7 @@ async function runTimbreTest() {
 
   const apiKey = process.env.GNANI_API_KEY;
   const ttsUrl = process.env.GNANI_TTS_URL || "https://api.vachana.ai/api/v1/tts/inference";
-  const voice = process.env.GNANI_TTS_VOICE || "Nalini";
+  const voice = process.env.GNANI_TTS_VOICE || "Lakshmi";
   const model = "timbre-v3.0";
   const language = "kn"; // Kannada
   const testText = "ನಮಸ್ಕಾರ, ಕೃಷಿವಾಯ್ಸ್ ಎಐ ವೇದಿಕೆಗೆ ನಿಮಗೆ ಆತ್ಮೀಯ ಸ್ವಾಗತ.";

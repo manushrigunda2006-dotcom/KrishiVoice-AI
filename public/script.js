@@ -612,7 +612,7 @@ function initTtsControls() {
         body: JSON.stringify({
           text: textToSpeak,
           language: state.currentLang === "en" ? "en" : "kn",
-          voice: "Nalini"
+          voice: "Lakshmi"
         })
       });
 
@@ -634,7 +634,7 @@ function initTtsControls() {
       }
 
       state.currentAudioPlayer = new Audio(audioUrl);
-      voiceEngineLabel.textContent = "Gnani Timbre (Nalini - Kannada) 🔊";
+      voiceEngineLabel.textContent = "Gnani Timbre (Lakshmi - Kannada) 🔊";
 
       playAudioBtn.hidden = true;
       stopAudioBtn.hidden = false;
