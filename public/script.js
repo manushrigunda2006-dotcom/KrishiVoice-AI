@@ -284,7 +284,7 @@ async function checkHealth() {
   }
 }
 
-// Dual-Mode Voice Transcription
+// Dual-Mode Voice Transcription (Gnani Prisma Primary)
 function initVoiceHandlers() {
   const recordBtn = $("recordBtn");
   const micPod = $("micPod");
@@ -293,113 +293,109 @@ function initVoiceHandlers() {
   const recordStatusHint = $("recordStatusHint");
   const questionInput = $("questionInput");
 
-  // Check if browser Web Speech API is supported
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recordingTimer = null;
+  let secondsElapsed = 0;
+  const MAX_RECORDING_SECONDS = 30;
 
   async function startRecording() {
-    state.isRecording = true;
-    micPod.classList.add("recording");
-    waveVisualizer.classList.add("show");
-
-    const dict = I18N[state.currentLang] || I18N.kn;
-    recordStatusTitle.textContent = dict.micListeningTitle || "ಧ್ವನಿ ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ…";
-    recordStatusHint.textContent = dict.micListeningHint || "ಮಾತು ಮುಗಿದ ನಂತರ ನಿಲ್ಲಿಸಲು ಮತ್ತೆ ಮೈಕ್ ಒತ್ತಿರಿ";
-
-    // If Gnani API key is configured, record audio with MediaRecorder for server-side Prisma STT
-    if (state.gnaniConfigured && navigator.mediaDevices?.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        state.audioChunks = [];
-        const preferredTypes = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/wav"];
-        const mimeType = preferredTypes.find((t) => MediaRecorder.isTypeSupported(t)) || "";
-        
-        state.mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
-        state.mediaRecorder.ondataavailable = (e) => {
-          if (e.data.size > 0) state.audioChunks.push(e.data);
-        };
-
-        state.mediaRecorder.onstop = async () => {
-          stream.getTracks().forEach((track) => track.stop());
-          const audioBlob = new Blob(state.audioChunks, { type: state.mediaRecorder.mimeType || "audio/webm" });
-          await sendAudioToPrisma(audioBlob);
-        };
-
-        state.mediaRecorder.start();
-        return;
-      } catch (err) {
-        console.warn("MediaRecorder failed, falling back to Web Speech API:", err);
-      }
+    if (!navigator.mediaDevices?.getUserMedia) {
+      recordStatusTitle.textContent = "ಮೈಕ್ರೋಫೋನ್ ಅಲಭ್ಯ";
+      recordStatusHint.textContent = "ಮೈಕ್ರೋಫೋನ್ ಬಳಸಲು HTTPS ಅಥವಾ localhost ಅಗತ್ಯವಿದೆ.";
+      return;
     }
 
-    // Browser Web Speech API Fallback
-    if (SpeechRecognition) {
-      try {
-        if (!state.speechRecognition) {
-          state.speechRecognition = new SpeechRecognition();
-          state.speechRecognition.continuous = false;
-          state.speechRecognition.interimResults = true;
+    try {
+      // 1. Explicit Microphone Permission Handling
+      recordStatusTitle.textContent = "ಮೈಕ್ ಅನುಮತಿ ಕೇಳಲಾಗುತ್ತಿದೆ…";
+      recordStatusHint.textContent = "ದಯವಿಟ್ಟು ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮೈಕ್ರೋಫೋನ್ ಅನುಮತಿ ನೀಡಿ";
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          channelCount: 1,
+          sampleRate: 16000,
+          echoCancellation: true,
+          noiseSuppression: true
+        }
+      });
+
+      state.isRecording = true;
+      micPod.classList.add("recording");
+      waveVisualizer.classList.add("show");
+      secondsElapsed = 0;
+
+      // Recording timer display (30s limit for Gnani Prisma REST)
+      recordStatusTitle.textContent = "ಧ್ವನಿ ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ… (00:00 / 00:30)";
+      recordStatusHint.textContent = "ಮಾತು ಮುಗಿದ ನಂತರ ನಿಲ್ಲಿಸಲು ಮತ್ತೆ ಮೈಕ್ ಒತ್ತಿರಿ";
+
+      recordingTimer = setInterval(() => {
+        secondsElapsed++;
+        const secsStr = secondsElapsed < 10 ? `0${secondsElapsed}` : secondsElapsed;
+        recordStatusTitle.textContent = `ಧ್ವನಿ ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ… (00:${secsStr} / 00:30)`;
+        if (secondsElapsed >= MAX_RECORDING_SECONDS) {
+          stopRecording();
+        }
+      }, 1000);
+
+      state.audioChunks = [];
+      const mimeTypes = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/wav"];
+      const supportedMime = mimeTypes.find(t => MediaRecorder.isTypeSupported(t)) || "";
+      state.mediaRecorder = new MediaRecorder(stream, supportedMime ? { mimeType: supportedMime } : undefined);
+
+      state.mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) state.audioChunks.push(e.data);
+      };
+
+      state.mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach(track => track.stop());
+        clearInterval(recordingTimer);
+
+        if (state.audioChunks.length === 0) {
+          recordStatusHint.textContent = "ಯಾವುದೇ ಧ್ವನಿ ದಾಖಲಾಗಿಲ್ಲ.";
+          return;
         }
 
-        const langCodes = { kn: "kn-IN", en: "en-IN", hi: "hi-IN", te: "te-IN", ta: "ta-IN" };
-        state.speechRecognition.lang = langCodes[state.currentLang] || "kn-IN";
+        const audioBlob = new Blob(state.audioChunks, {
+          type: state.mediaRecorder.mimeType || "audio/webm"
+        });
+        await sendAudioToPrisma(audioBlob);
+      };
 
-        state.speechRecognition.onresult = (event) => {
-          let interim = "";
-          let final = "";
-          for (let i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-              final += event.results[i][0].transcript;
-            } else {
-              interim += event.results[i][0].transcript;
-            }
-          }
-          questionInput.value = final || interim;
-        };
+      state.mediaRecorder.start(250); // Slice chunks every 250ms
+    } catch (err) {
+      state.isRecording = false;
+      micPod.classList.remove("recording");
+      waveVisualizer.classList.remove("show");
+      clearInterval(recordingTimer);
 
-        state.speechRecognition.onerror = (event) => {
-          console.warn("Web Speech Error:", event.error);
-          stopRecording();
-        };
-
-        state.speechRecognition.onend = () => {
-          stopRecording();
-          if (questionInput.value.trim()) {
-            submitQuestion();
-          }
-        };
-
-        state.speechRecognition.start();
-        return;
-      } catch (err) {
-        console.error("SpeechRecognition error:", err);
+      if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+        recordStatusTitle.textContent = "ಮೈಕ್ ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ";
+        recordStatusHint.textContent = "ದಯವಿಟ್ಟು ಬ್ರೌಸರ್ ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಮೈಕ್ ಅನುಮತಿ ನೀಡಿ ನಂತರ ಮರುಪ್ರಯತ್ನಿಸಿ.";
+      } else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
+        recordStatusTitle.textContent = "ಮೈಕ್ರೋಫೋನ್ ಕಂಡುಬಂದಿಲ್ಲ";
+        recordStatusHint.textContent = "ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಮೈಕ್ರೋಫೋನ್ ಸರಿಯಾಗಿ ಸಂಪರ್ಕಗೊಂಡಿದೆಯೇ ಪರಿಶೀಲಿಸಿ.";
+      } else {
+        recordStatusTitle.textContent = "ಮೈಕ್ ದೋಷ";
+        recordStatusHint.textContent = "ದೋಷ: " + err.message;
       }
     }
-
-    recordStatusHint.textContent = "ಮೈಕ್ರೋಫೋನ್ ಅನುಮತಿ ಲಭ್ಯವಿಲ್ಲ ಅಥವಾ HTTPS ಅಗತ್ಯವಿದೆ.";
-    stopRecording();
   }
 
   function stopRecording() {
+    if (!state.isRecording) return;
     state.isRecording = false;
     micPod.classList.remove("recording");
     waveVisualizer.classList.remove("show");
-
-    const dict = I18N[state.currentLang] || I18N.kn;
-    recordStatusTitle.textContent = dict.micReadyTitle || "ಮಾತನಾಡಲು ಮೈಕ್ ಒತ್ತಿರಿ";
-    recordStatusHint.textContent = dict.micReadyHint || "ಕನ್ನಡದಲ್ಲಿ ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ";
+    clearInterval(recordingTimer);
 
     if (state.mediaRecorder && state.mediaRecorder.state !== "inactive") {
       state.mediaRecorder.stop();
-    }
-    if (state.speechRecognition) {
-      try { state.speechRecognition.stop(); } catch (_) {}
     }
   }
 
   async function sendAudioToPrisma(audioBlob) {
     const dict = I18N[state.currentLang] || I18N.kn;
-    recordStatusTitle.textContent = dict.micProcessingTitle || "ಧ್ವನಿ ಪಠ್ಯವಾಗುತ್ತಿದೆ…";
-    recordStatusHint.textContent = dict.micProcessingHint || "Gnani Prisma STT ಮೂಲಕ ಪರಿವರ್ತಿಸಲಾಗುತ್ತಿದೆ";
+    recordStatusTitle.textContent = "Gnani Prisma STT ಪರಿವರ್ತನೆ…";
+    recordStatusHint.textContent = "Gnani AI ಸರ್ವರ್‌ನಲ್ಲಿ ಧ್ವನಿಯನ್ನು ಕನ್ನಡ ಪಠ್ಯವಾಗಿ ಪರಿವರ್ತಿಸಲಾಗುತ್ತಿದೆ…";
 
     const formData = new FormData();
     formData.append("audio", audioBlob, "recording.webm");
@@ -413,20 +409,34 @@ function initVoiceHandlers() {
       });
       const data = await response.json();
 
-      if (data.transcript) {
+      if (response.ok && data.transcript) {
+        // Successful transcription returned from Gnani Prisma
         questionInput.value = data.transcript;
-        recordStatusHint.textContent = "ಧ್ವನಿ ಪಠ್ಯವಾಗಿದೆ ✓";
-        submitQuestion();
+        questionInput.focus();
+        recordStatusTitle.textContent = "ಧ್ವನಿ ಪಠ್ಯವಾಗಿದೆ ✓";
+        recordStatusHint.textContent = "Gnani Prisma ಪಠ್ಯ ಲಭ್ಯವಾಗಿದೆ. ಉತ್ತರ ಪಡೆಯಲಾಗುತ್ತಿದೆ…";
+        // Complete Voice Interaction: Mic -> Prisma -> Transcript -> Answer -> Timbre
+        submitQuestion(true);
+      } else if (data.fallbackMode) {
+        // Demo mode without key: fallback to browser Web Speech if available
+        recordStatusTitle.textContent = "ಡೆಮೊ ಮೋಡ್ ಸಕ್ರಿಯ";
+        recordStatusHint.textContent = "Gnani API ಕೀ ಸೇರಿಸಿಲ್ಲ. ದಯವಿಟ್ಟು .env ನಲ್ಲಿ GNANI_API_KEY ನಮೂದಿಸಿ.";
       } else {
-        recordStatusHint.textContent = data.message || "ಧ್ವನಿಯಿಂದ ಪಠ್ಯ ಸಿಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.";
+        // Gnani API error reporting
+        const errDetail = data.detail?.message || data.error || "ಧ್ವನಿ ಪರಿವರ್ತನೆ ವಿಫಲವಾಗಿದೆ";
+        recordStatusTitle.textContent = "Gnani STT ದೋಷ";
+        recordStatusHint.textContent = `${errDetail} (Status ${data.statusCode || response.status})`;
       }
     } catch (err) {
-      recordStatusHint.textContent = "ಧ್ವನಿ ಪ್ರಕ್ರಿಯೆ ವಿಫಲವಾಯಿತು: " + err.message;
+      recordStatusTitle.textContent = "ಸಂಪರ್ಕ ದೋಷ";
+      recordStatusHint.textContent = "ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: " + err.message;
     } finally {
       setTimeout(() => {
-        recordStatusTitle.textContent = dict.micReadyTitle;
-        recordStatusHint.textContent = dict.micReadyHint;
-      }, 3000);
+        if (!state.isRecording) {
+          recordStatusTitle.textContent = dict.micReadyTitle || "ಮಾತನಾಡಲು ಮೈಕ್ ಒತ್ತಿರಿ";
+          recordStatusHint.textContent = dict.micReadyHint || "ಕನ್ನಡದಲ್ಲಿ ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ";
+        }
+      }, 5000);
     }
   }
 
@@ -452,7 +462,7 @@ function initVoiceHandlers() {
 }
 
 // Ask Assistant & Fetch Verified Answer
-async function submitQuestion() {
+async function submitQuestion(autoPlayTimbre = false) {
   const questionInput = $("questionInput");
   const rawText = questionInput.value.trim();
 
@@ -493,6 +503,13 @@ async function submitQuestion() {
     addToHistory(rawText, data);
 
     answerStateText.textContent = data.found ? "MATCH FOUND" : "NO MATCH";
+
+    // Complete Voice Interaction loop: Audio playback via Gnani Timbre
+    if (autoPlayTimbre && typeof state.speakWithTimbre === "function") {
+      setTimeout(() => {
+        state.speakWithTimbre();
+      }, 400);
+    }
   } catch (err) {
     console.error("Ask query error:", err);
     loadingAnswerState.hidden = true;
@@ -569,7 +586,7 @@ function renderAnswer(data) {
   }
 }
 
-// Spoken Audio Synthesis (Gnani Timbre + Web Speech Fallback)
+// Official Gnani Timbre Text-to-Speech (TTS) Controller
 function initTtsControls() {
   const playAudioBtn = $("playAudioBtn");
   const stopAudioBtn = $("stopAudioBtn");
@@ -583,78 +600,81 @@ function initTtsControls() {
 
     if (!textToSpeak) return;
 
-    // Toggle Buttons
-    playAudioBtn.hidden = true;
-    stopAudioBtn.hidden = false;
+    // Loading / buffering state
+    playAudioBtn.disabled = true;
+    playAudioBtn.querySelector(".play-text").textContent = "ಸಿದ್ಧವಾಗುತ್ತಿದೆ…";
+    voiceEngineLabel.textContent = "Gnani Timbre ಆಡಿಯೋ ಸಿದ್ಧವಾಗುತ್ತಿದೆ…";
 
-    // 1. Try Gnani Timbre Backend if configured
-    if (state.gnaniConfigured) {
-      voiceEngineLabel.textContent = "Gnani Timbre Voice";
-      try {
-        const response = await fetch("/api/tts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            text: textToSpeak,
-            language: state.currentLang === "en" ? "en" : "kn",
-            voice: "Nalini"
-          })
-        });
+    try {
+      const response = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: textToSpeak,
+          language: state.currentLang === "en" ? "en" : "kn",
+          voice: "Nalini"
+        })
+      });
 
-        if (response.ok && response.headers.get("content-type")?.includes("audio")) {
-          const audioBlob = await response.blob();
-          const audioUrl = URL.createObjectURL(audioBlob);
-          state.currentAudioPlayer = new Audio(audioUrl);
-          state.currentAudioPlayer.onended = stopSpeaking;
-          state.currentAudioPlayer.onerror = () => speakBrowserFallback(textToSpeak);
-          state.currentAudioPlayer.play();
-          return;
-        }
-      } catch (err) {
-        console.warn("Gnani Timbre synthesis error, falling back to browser speech:", err);
+      if (!response.ok) {
+        const errPayload = await response.json().catch(() => ({}));
+        const errMsg = errPayload.error || "Gnani Timbre ಧ್ವನಿ ಸಂಶ್ಲೇಷಣೆ ವಿಫಲವಾಯಿತು";
+        voiceEngineLabel.textContent = `Gnani Timbre ದೋಷ: ${errMsg}`;
+        alert(`Gnani Timbre TTS: ${errMsg}`);
+        return;
       }
+
+      // Parse audio binary response from Gnani Timbre
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      if (state.currentAudioPlayer) {
+        state.currentAudioPlayer.pause();
+        state.currentAudioPlayer = null;
+      }
+
+      state.currentAudioPlayer = new Audio(audioUrl);
+      voiceEngineLabel.textContent = "Gnani Timbre (Nalini - Kannada) 🔊";
+
+      playAudioBtn.hidden = true;
+      stopAudioBtn.hidden = false;
+
+      state.currentAudioPlayer.onended = () => {
+        stopSpeaking();
+      };
+
+      state.currentAudioPlayer.onerror = (e) => {
+        console.error("Audio playback error:", e);
+        voiceEngineLabel.textContent = "ಆಡಿಯೋ ಪ್ಲೇಬ್ಯಾಕ್ ದೋಷ";
+        stopSpeaking();
+      };
+
+      await state.currentAudioPlayer.play();
+    } catch (err) {
+      console.error("Gnani Timbre error:", err);
+      voiceEngineLabel.textContent = "Gnani Timbre ಸಂಪರ್ಕ ದೋಷ: " + err.message;
+    } finally {
+      playAudioBtn.disabled = false;
+      playAudioBtn.querySelector(".play-text").textContent = I18N[state.currentLang]?.speakBtn || "ಧ್ವನಿಯಲ್ಲಿ ಕೇಳಿ";
     }
-
-    // 2. Browser SpeechSynthesis Fallback
-    speakBrowserFallback(textToSpeak);
-  }
-
-  function speakBrowserFallback(text) {
-    if (!("speechSynthesis" in window)) {
-      alert("ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಧ್ವನಿ ಸೌಲಭ್ಯ ಲಭ್ಯವಿಲ್ಲ.");
-      stopSpeaking();
-      return;
-    }
-
-    voiceEngineLabel.textContent = "Browser Voice Synthesis";
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    const langCodes = { kn: "kn-IN", en: "en-IN", hi: "hi-IN", te: "te-IN", ta: "ta-IN" };
-    utterance.lang = langCodes[state.currentLang] || "kn-IN";
-    utterance.rate = 0.95; // Slightly slower for clear rural comprehension
-
-    utterance.onend = stopSpeaking;
-    utterance.onerror = stopSpeaking;
-
-    state.activeSpeechUtterance = utterance;
-    window.speechSynthesis.speak(utterance);
   }
 
   function stopSpeaking() {
     if (state.currentAudioPlayer) {
       state.currentAudioPlayer.pause();
+      state.currentAudioPlayer.currentTime = 0;
       state.currentAudioPlayer = null;
     }
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
+    voiceEngineLabel.textContent = "Gnani Timbre Voice";
     playAudioBtn.hidden = false;
     stopAudioBtn.hidden = true;
   }
 
   playAudioBtn.addEventListener("click", speakAnswer);
   stopAudioBtn.addEventListener("click", stopSpeaking);
+
+  // Expose speakAnswer for voice interaction flow
+  state.speakWithTimbre = speakAnswer;
 }
 
 // Conversation Session History

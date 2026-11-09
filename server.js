@@ -3,6 +3,7 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { execFile } = require("child_process");
 
 const app = express();
 
@@ -162,33 +163,68 @@ app.get("/api/knowledge", (_req, res) => {
   res.json({ categories, topics: samplePrompts });
 });
 
+/**
+ * Convert arbitrary audio recording (WebM, OGG, MP4, etc.)
+ * to standard 16kHz mono 16-bit PCM WAV for Gnani Prisma STT
+ */
+function convertAudioToWav(inputPath) {
+  return new Promise((resolve, reject) => {
+    const outputPath = path.join(tmpDir, `prisma-${Date.now()}-${Math.random().toString(36).slice(2)}.wav`);
+    // Enforce 16kHz, 1 channel mono, 16-bit PCM, max 30 seconds
+    const args = [
+      "-y",
+      "-i", inputPath,
+      "-t", "30",
+      "-ar", "16000",
+      "-ac", "1",
+      "-c:a", "pcm_s16le",
+      outputPath
+    ];
+
+    execFile("ffmpeg", args, (err, _stdout, stderr) => {
+      if (err) {
+        console.error("FFmpeg conversion error:", stderr);
+        return reject(new Error("Audio format validation/conversion failed: " + stderr));
+      }
+      resolve(outputPath);
+    });
+  });
+}
+
 // STT Endpoint - Gnani Prisma
 app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
   const hasKey = Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key");
   
-  if (!hasKey) {
-    if (req.file) {
-      fs.promises.unlink(req.file.path).catch(() => {});
-    }
-    return res.status(200).json({
-      fallbackMode: true,
-      transcript: "",
-      message: "Gnani API key is not configured in .env. Client Web Speech API fallback active."
-    });
-  }
-
   if (!req.file) {
     return res.status(400).json({ error: "Please record or upload an audio file." });
   }
 
-  try {
-    const audioBytes = fs.readFileSync(req.file.path);
-    const form = new FormData();
-    const mimeType = req.file.mimetype || "audio/webm";
-    const filename = req.file.originalname || "recording.webm";
-    const blob = new Blob([audioBytes], { type: mimeType });
+  let convertedWavPath = null;
+  const originalPath = req.file.path;
 
-    form.append("audio_file", blob, filename);
+  if (!hasKey) {
+    if (originalPath) fs.promises.unlink(originalPath).catch(() => {});
+    return res.status(401).json({
+      error: "Gnani API key is not configured. Please add GNANI_API_KEY to your .env file.",
+      speechConfigured: false,
+      detail: { message: "GNANI_API_KEY environment variable is missing or placeholder." }
+    });
+  }
+
+  try {
+    // 1. Audio format validation and conversion to 16kHz 16-bit mono WAV
+    try {
+      convertedWavPath = await convertAudioToWav(originalPath);
+    } catch (convErr) {
+      console.warn("WAV conversion failed, attempting raw upload:", convErr.message);
+      convertedWavPath = originalPath;
+    }
+
+    const audioBytes = fs.readFileSync(convertedWavPath);
+    const blob = new Blob([audioBytes], { type: "audio/wav" });
+    const form = new FormData();
+
+    form.append("audio_file", blob, "recording.wav");
     form.append("model", process.env.GNANI_STT_MODEL || "prisma-v3.0");
     form.append("language_code", req.body.languageCode || "kn-IN");
     form.append("preferred_language", req.body.languageCode || "kn-IN");
@@ -205,14 +241,21 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
 
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
+      const errMsg = payload?.detail?.message || payload?.message || payload?.error || "Gnani Prisma transcription request failed.";
       return res.status(response.status).json({
-        error: payload.message || payload.error || "Gnani Prisma transcription request failed.",
-        detail: payload
+        error: errMsg,
+        detail: payload,
+        statusCode: response.status
       });
     }
 
     const transcript = payload.transcript || payload.text || "";
-    res.json({ transcript, raw: payload });
+    res.json({
+      ok: true,
+      transcript,
+      languageCode: req.body.languageCode || "kn-IN",
+      raw: payload
+    });
   } catch (err) {
     console.error("Gnani Prisma STT error:", err);
     res.status(500).json({
@@ -220,7 +263,11 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
       detail: err.message
     });
   } finally {
-    fs.promises.unlink(req.file.path).catch(() => {});
+    // Backend security: Ensure all temporary recordings are deleted immediately
+    if (originalPath) fs.promises.unlink(originalPath).catch(() => {});
+    if (convertedWavPath && convertedWavPath !== originalPath) {
+      fs.promises.unlink(convertedWavPath).catch(() => {});
+    }
   }
 });
 
@@ -228,17 +275,22 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
 app.post("/api/tts", async (req, res) => {
   const text = String(req.body.text || "").trim();
   const language = req.body.language || "kn";
-  const voice = req.body.voice || "Nalini";
+  const voice = req.body.voice || process.env.GNANI_TTS_VOICE || "Nalini";
 
   if (!text) {
     return res.status(400).json({ error: "Text is required for TTS synthesis." });
   }
 
+  // Enforce text length limit (max 3000 chars per TTS request)
+  if (text.length > 3000) {
+    return res.status(400).json({ error: "Text exceeds maximum limit of 3000 characters." });
+  }
+
   const hasKey = Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key");
   if (!hasKey) {
-    return res.json({
-      useBrowserFallback: true,
-      message: "Gnani API key not configured. Using browser speech synthesis fallback."
+    return res.status(401).json({
+      error: "Gnani API key is not configured. Please add GNANI_API_KEY to your .env file to enable Gnani Timbre TTS.",
+      ttsConfigured: false
     });
   }
 
@@ -265,30 +317,38 @@ app.post("/api/tts", async (req, res) => {
       })
     });
 
+    const contentType = response.headers.get("content-type") || "";
+
     if (!response.ok) {
       const errPayload = await response.json().catch(() => ({}));
       return res.status(response.status).json({
-        error: "Gnani Timbre TTS request failed.",
+        error: errPayload?.detail?.message || errPayload?.message || "Gnani Timbre TTS request failed.",
         detail: errPayload,
-        useBrowserFallback: true
+        statusCode: response.status
       });
     }
 
-    // Check content type to see if binary WAV or JSON
-    const contentType = response.headers.get("content-type") || "";
-    if (contentType.includes("audio")) {
-      res.setHeader("Content-Type", contentType);
+    // Stream binary WAV audio directly back to the client
+    if (contentType.includes("audio") || contentType.includes("octet-stream")) {
+      res.setHeader("Content-Type", "audio/wav");
+      res.setHeader("Cache-Control", "no-cache");
       const arrayBuffer = await response.arrayBuffer();
       return res.send(Buffer.from(arrayBuffer));
     } else {
-      const json = await response.json();
+      const json = await response.json().catch(() => ({}));
+      // Check if JSON contains base64 audio
+      const b64 = json.audio || json.audio_content || json.data;
+      if (b64 && typeof b64 === "string") {
+        const audioBuf = Buffer.from(b64, "base64");
+        res.setHeader("Content-Type", "audio/wav");
+        return res.send(audioBuf);
+      }
       return res.json(json);
     }
   } catch (err) {
     console.error("Gnani Timbre TTS error:", err);
-    res.json({
-      useBrowserFallback: true,
-      error: err.message
+    res.status(500).json({
+      error: "Could not reach Gnani Timbre TTS service: " + err.message
     });
   }
 });

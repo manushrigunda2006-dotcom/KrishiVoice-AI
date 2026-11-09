@@ -6,148 +6,142 @@
 
 ## Overview
 
-**KrishiVoice AI 2.0** is a production-oriented, mobile-first agricultural intelligence platform built specifically to empower farmers across Karnataka and India. Farmers can ask agricultural questions in Kannada or English using natural voice or text, and receive immediate, verified guidance sourced from authoritative agricultural bodies such as ICAR, UAS Bangalore (GKVK), UAS Dharwad, and the Karnataka State Department of Agriculture (KSDA).
+**KrishiVoice AI 2.0** is a production-oriented, mobile-first agricultural intelligence platform built specifically to empower farmers across Karnataka and India. It integrates **Gnani.ai's official speech technology suite** (`api.vachana.ai`):
+1. **Gnani Prisma STT (Speech-to-Text)**: High-accuracy Kannada (`kn-IN`) and multilingual speech recognition.
+2. **Gnani Timbre TTS (Text-to-Speech)**: Natural Indian voice synthesis for agricultural advice playback.
 
 ---
 
-## Key Features Implemented (Phase 1: Foundation)
-
-- **Kannada-First Multilingual Assistant:** Conversational query engine optimized for Kannada (`kn-IN`) and English (`en-IN`), with foundation for Hindi, Telugu, and Tamil.
-- **Dual-Mode Speech Recognition (STT):**
-  - **Gnani Prisma STT Integration:** Directly calls `https://api.vachana.ai/stt/v3` with `audio_file`, `model=prisma-v3.0`, and `X-API-Key-ID`.
-  - **Browser Web Speech Fallback:** Automatically operates via `webkitSpeechRecognition` when running locally without API credentials, ensuring seamless demonstration without breaking.
-- **Text-to-Speech (TTS) Engine:**
-  - **Gnani Timbre TTS:** Configured endpoint for `https://api.vachana.ai/api/v1/tts/inference` (`timbre-v3.0`, `voice: "Nalini"`).
-  - **Browser Speech Synthesis Fallback:** Clear audio narration with adjusted speech rates for rural comprehension.
-- **Reviewed Agricultural Knowledge Base:**
-  - Over 19 comprehensive, verified entries categorized into:
-    1. *Major Crops* (Ragi, Paddy, Maize, Sugarcane, Groundnut, Cotton, Onion, Arecanut, Tomato).
-    2. *Pest & Disease Management* (Paddy blast, Fall Armyworm, Koleroga, Tomato leaf curl, Pink bollworm, Tikka).
-    3. *Soil Health & Organic Farming* (Soil testing, Jeevamrutha, Vermicomposting, Bio-fertilizers).
-    4. *Micro-Irrigation* (Drip & Sprinkler subsidies under PMKSY).
-    5. *Government Schemes* (PM-KISAN ₹6000, Raitha Siri millet incentive, PMFBY crop insurance, Krishi Bhagya).
-    6. *Seasonal Agro-Advisories & Helplines* (Kisan Call Centre 1800-180-1551).
-- **Intelligent Multi-Token Search & Tokenizer:** Tokenizes Kannada and English queries, strips stop words, calculates TF-IDF keyword overlap scores, and offers related suggestions when questions are unmatched.
-- **Agricultural Safety System:** Strict safety guards preventing unverified pesticide doses or chemical prescriptions; every response references official sources and advises local KVK / Agriculture Officer consultations.
-- **Modern Mobile-First UI/UX:**
-  - Forest Green & Fresh Leaf Green palette (`#143826`, `#2d6a4f`).
-  - Dual typography (`Noto Sans Kannada` + `DM Sans`).
-  - Dynamic audio waveform visualizer and animated mic pulse rings.
-  - Active session conversation history with one-tap query re-run.
-  - Instant zero-reload language toggle.
-
----
-
-## Tech Stack
-
-- **Backend:** Node.js, Express.js, Multer (multipart audio uploads)
-- **Frontend:** Vanilla TypeScript/JavaScript, Semantic HTML5, Custom Mobile-First CSS Design System, SVG Lucide/Feather icons
-- **Speech & AI:** Gnani.ai Prisma STT (v3.0), Gnani.ai Timbre TTS (v3.0), Web Speech API
-- **Knowledge Sources:** ICAR, UAS Bangalore (GKVK), UAS Dharwad, KSDA Raitha Mitra, Soil Health Portal, PM-KISAN Portal
-
----
-
-## Directory Structure
+## Complete Voice Interaction Workflow
 
 ```text
-KrishiVoice-AI/
-├── .env.example            # Environment variables template
-├── .gitignore              # Ignored files (node_modules, .env, tmp/)
-├── knowledge.json          # Curated agricultural knowledge entries
-├── package.json            # Project manifest and dependencies
-├── README.md               # Complete platform documentation
-├── server.js               # Express API server with Gnani Prisma & Timbre routes
-└── public/
-    ├── index.html          # Responsive, mobile-first frontend
-    ├── script.js           # Client controller, STT/TTS engine & localization
-    └── style.css           # Agricultural design system stylesheet
+[🎤 Farmer Speaks in Kannada]
+          │
+          ▼
+[Browser MediaRecorder (WebM/WAV)]
+          │
+          ▼ (POST /api/transcribe)
+[Backend FFmpeg Audio Validator & 16kHz Mono WAV Converter]
+          │
+          ▼ (Multipart Form-Data to https://api.vachana.ai/stt/v3)
+[Gnani Prisma v3.0 STT Model]
+          │
+          ▼ (Returns Kannada Transcript)
+[Editable Transcript in UI + POST /api/ask]
+          │
+          ▼
+[Verified ICAR/KSDA Agricultural Knowledge Matcher]
+          │
+          ▼ (POST /api/tts)
+[Gnani Timbre v3.0 TTS Model (https://api.vachana.ai/api/v1/tts/inference)]
+          │
+          ▼ (Streams Binary WAV Audio)
+[🔊 Audio Playback with Play & Stop Controls]
 ```
 
 ---
 
-## Getting Started Locally
+## Gnani.ai Speech Integrations
 
-### 1. Prerequisites
-- **Node.js**: v18.0.0 or higher (Node 20 LTS recommended)
-- **npm**: v9.0.0 or higher
+### 1. Gnani Prisma Speech-to-Text (STT)
+- **Endpoint**: `https://api.vachana.ai/stt/v3`
+- **Method**: `POST`
+- **Authentication Header**: `X-API-Key-ID: <GNANI_API_KEY>`
+- **Content-Type**: `multipart/form-data`
+- **Documented Request Fields**:
+  - `audio_file`: Converted 16kHz mono 16-bit PCM WAV file.
+  - `model`: `prisma-v3.0`
+  - `language_code`: `kn-IN` (Kannada), `en-IN` (English), etc.
+  - `preferred_language`: `kn-IN`
+  - `format`: `transcribe`
+- **Audio Validation & Conversion**: Built-in backend integration using `ffmpeg` automatically normalizes any browser audio format (WebM, OGG, MP4, AAC) into standard 16kHz mono 16-bit PCM WAV and caps recording duration at 30 seconds.
+- **Backend Security**: All temporary files are unlinked and destroyed immediately in the `finally` execution block.
 
-### 2. Installation
-Clone or extract the repository, navigate into the directory and install dependencies:
-```bash
-cd KrishiVoice-AI
-npm install
-```
+### 2. Gnani Timbre Text-to-Speech (TTS)
+- **Endpoint**: `https://api.vachana.ai/api/v1/tts/inference`
+- **Method**: `POST`
+- **Authentication Header**: `X-API-Key-ID: <GNANI_API_KEY>`
+- **Content-Type**: `application/json`
+- **Request Payload**:
+  ```json
+  {
+    "text": "ರಾಗಿ ಬಿತ್ತನೆಗೆ ಜುಲೈ-ಆಗಸ್ಟ್ ತಿಂಗಳು ಅತ್ಯಂತ ಸೂಕ್ತ...",
+    "voice": "Nalini",
+    "model": "timbre-v3.0",
+    "language": "kn",
+    "speed": 1.0,
+    "audio_config": {
+      "encoding": "linear_pcm",
+      "container": "wav",
+      "num_channels": 1,
+      "sample_rate": 24000
+    }
+  }
+  ```
+- **Response Parsing**: Server streams the binary WAV audio directly to the client as `audio/wav`.
+- **Playback Controls**: The UI provides responsive Play and Stop buttons, active audio visualizer indicators, and error reporting. (Browser speech synthesis is strictly not used as a substitute for Gnani Timbre).
 
-### 3. Environment Setup
+---
+
+## Environment Variables Configuration
+
 Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
 ```
-Edit `.env` to configure your credentials:
+
+Set your credentials in `.env`:
 ```env
 PORT=3000
-GNANI_API_KEY=your_actual_gnani_api_key_here
+
+# Your official Gnani API key from https://api.vachana.ai
+GNANI_API_KEY=your_actual_api_key_here
+
+# Gnani Prisma STT Endpoint & Model
 GNANI_STT_URL=https://api.vachana.ai/stt/v3
 GNANI_STT_MODEL=prisma-v3.0
+
+# Gnani Timbre TTS Endpoint & Voice
 GNANI_TTS_URL=https://api.vachana.ai/api/v1/tts/inference
 GNANI_TTS_VOICE=Nalini
 ```
-*(Note: If you do not have a Gnani API key yet, the application automatically runs in demo mode using browser-native Web Speech recognition and synthesis!)*
 
-### 4. Running the Server
+---
+
+## Testing Gnani AI Integrations Independently
+
+Two dedicated standalone test scripts are provided to verify the live Gnani AI API integrations independently without running the whole frontend:
+
+### 1. Test Gnani Prisma STT:
 ```bash
-npm start
+node test-prisma.js
 ```
-For development with automatic reloading:
+*What it tests:*
+- Generates a valid 16kHz mono WAV audio file with FFmpeg.
+- Constructs the official multipart/form-data payload with documented fields.
+- Transmits to `https://api.vachana.ai/stt/v3` with `X-API-Key-ID`.
+- Prints HTTP status, response JSON, and diagnostic advice.
+
+### 2. Test Gnani Timbre TTS:
 ```bash
-npm run dev
+node test-timbre.js
 ```
-
-Visit **`http://localhost:3000`** in your browser (Chrome or Edge recommended for full microphone and speech synthesis support).
-
----
-
-## API Endpoints Reference
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/health` | Health check returning speech configuration, knowledge count, and categories. |
-| `GET` | `/api/knowledge` | Returns list of categories and sample query prompts. |
-| `POST` | `/api/transcribe` | Accepts multipart audio (`audio_file`) and calls Gnani Prisma STT (`kn-IN`). |
-| `POST` | `/api/tts` | Calls Gnani Timbre TTS (`kn`) with text payload and voice parameters. |
-| `POST` | `/api/ask` | Natural language question matcher returning verified agricultural guidance, citations, safety disclaimers, and related suggestions. |
+*What it tests:*
+- Prepares the JSON synthesis request for Kannada (`kn`) using model `timbre-v3.0` and voice `Nalini`.
+- Sends POST request to `https://api.vachana.ai/api/v1/tts/inference`.
+- Verifies binary WAV audio streaming and saves a sample WAV file to `tmp/`.
 
 ---
 
-## Testing
+## Running the Platform Locally
 
-Run the included automated endpoint test suite using PowerShell:
-```powershell
-$body = [System.Text.Encoding]::UTF8.GetBytes('{"question":"ರಾಗಿ ಬಿತ್ತನೆಗೆ ಸೂಕ್ತ ಸಮಯ ಯಾವುದು?"}')
-Invoke-RestMethod -Uri "http://localhost:3000/api/ask" -Method Post -ContentType "application/json; charset=utf-8" -Body $body
-```
-
----
-
-## Multi-Phase Roadmap
-
-- **Phase 1: Foundation (COMPLETED)**
-  - Audit existing starter, fix multer race condition and encoding errors.
-  - Deliver responsive Kannada-first agricultural UI with mobile-first cards.
-  - Implement dual-mode speech recognition (Gnani Prisma STT + Web Speech fallback).
-  - Integrate authoritative 19+ topic Karnataka knowledge base with safety disclaimers.
-  - Implement full bilingual localization and session conversation history.
-- **Phase 2: Intelligence (Next Phase)**
-  - Full Gnani Timbre real-time streaming audio integration.
-  - Vision model for crop disease detection from leaf photographs.
-  - Multi-turn conversational memory.
-- **Phase 3: Agricultural Tools**
-  - Live IMD weather intelligence and micro-climate advisories.
-  - Real-time AGMARKNET Karnataka APMC mandi prices.
-  - Automated Smart Farm Calendar with crop lifecycle reminders.
-- **Phase 4: Personalisation**
-  - Farmer registration and land registry (FRUITS / RTC integration).
-  - Farm dashboard with active crops and notification engine.
-- **Phase 5: Advanced Platform**
-  - Offline-first PWA caching and sync.
-  - Protected admin dashboard for KVK scientists.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the Express server:
+   ```bash
+   npm start
+   ```
+3. Open `http://localhost:3000` in Google Chrome or Microsoft Edge.
+4. Click the **🎙️ microphone button** to grant microphone permission, record a query in Kannada, and experience the complete Gnani AI voice flow.
