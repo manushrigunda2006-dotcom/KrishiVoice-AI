@@ -1,42 +1,287 @@
 [
   {
-    "keywords": ["ಮಣ್ಣಿನ ಆರೋಗ್ಯ", "soil health", "soil", "ಮಣ್ಣು"],
-    "answerKn": "ಮಣ್ಣಿನ ಆರೋಗ್ಯ ತಿಳಿಯಲು ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ ಮಾಡಿಸುವುದು ಉತ್ತಮ. ಪರೀಕ್ಷೆಯ ಫಲಿತಾಂಶದ ಆಧಾರದ ಮೇಲೆ ಮಾತ್ರ ಗೊಬ್ಬರ ಬಳಸಿ. ಬೆಳೆ ಪರಿವರ್ತನೆ, ಸಾವಯವ ಪದಾರ್ಥಗಳ ಸಮರ್ಪಕ ಬಳಕೆ ಮತ್ತು ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಾಪಾಡುವುದು ಸಹಾಯ ಮಾಡಬಹುದು.",
-    "answerEn": "A soil test is the best starting point for understanding soil health. Use fertilisers based on the test results. Crop rotation, suitable organic matter and moisture conservation can also help.",
-    "source": "General soil-health guidance. Verify locally before making farm decisions.",
-    "sourceUrl": "https://soilhealth.dac.gov.in/",
-    "safety": "Fertiliser quantities depend on the crop and soil-test result. Do not guess the dose."
+    "id": "crop_ragi_cultivation",
+    "category": "Crops",
+    "keywords": [
+      "ರಾಗಿ", "ragi", "finger millet", "ರಾಗಿ ಬಿತ್ತನೆ", "ರಾಗಿ ತಳಿಗಳು", "ರಾಗಿ ಇಳುವರಿ", "ragi sowing", "ragi varieties", "ragi season", "karnataka ragi"
+    ],
+    "titleKn": "ರಾಗಿ ಬೆಳೆ ಮತ್ತು ಬಿತ್ತನೆ ನಿರ್ವಹಣೆ",
+    "titleEn": "Ragi (Finger Millet) Cultivation & Sowing",
+    "answerKn": "ರಾಗಿ ಕರ್ನಾಟಕದ ಪ್ರಮುಖ ಸಿರಿಧಾನ್ಯ ಬೆಳೆಯಾಗಿದೆ. ಮುಂಗಾರು ಹಂಗಾಮಿನಲ್ಲಿ ಜುಲೈ-ಆಗಸ್ಟ್ ತಿಂಗಳು ರಾಗಿ ಬಿತ್ತನೆಗೆ ಅತ್ಯಂತ ಸೂಕ್ತ. ಜನಪ್ರಿಯ ಸುಧಾರಿತ ತಳಿಗಳು: GPU-28, ML-365, MR-1, ಮತ್ತು KMR-301 (ಮಳೆಯಾಶ್ರಿತ ಮತ್ತು ನೀರಾವರಿ ಎರಡಕ್ಕೂ ಸೂಕ್ತ). ಎಕರೆಗೆ 4 ರಿಂದ 5 ಕೆಜಿ ಬೀಜ ಸಾಕಾಗುತ್ತದೆ. ಬೀಜೋಪಚಾರಕ್ಕಾಗಿ ಪ್ರತಿ ಕೆಜಿ ಬೀಜಕ್ಕೆ 2 ಗ್ರಾಂ ಕ್ಯಾಪ್ಟನ್ ಅಥವಾ ಜೈವಿಕ ಅಜೋಸ್ಪೈರಿಲಂ ಬೆರೆಸಿ. ಸಾಲಿನಿಂದ ಸಾಲಿಗೆ 30 ಸೆಂ.ಮೀ ಮತ್ತು ಗಿಡದಿಂದ ಗಿಡಕ್ಕೆ 10 ಸೆಂ.ಮೀ ಅಂತರ ಕಾಪಾಡಿ.",
+    "answerEn": "Ragi is a principal staple millet crop of Karnataka. The ideal sowing window for Kharif is July to mid-August. High-yielding recommended varieties include GPU-28, ML-365, MR-1, and KMR-301 (suitable for rainfed and irrigated conditions). Seed rate is 4-5 kg per acre. Treat seeds with 2g Captan or Azospirillum bio-fertilizer per kg of seed. Maintain row spacing of 30 cm and plant spacing of 10 cm.",
+    "source": "University of Agricultural Sciences, Bangalore (GKVK) - Package of Practices",
+    "sourceUrl": "https://uasbangalore.edu.in/",
+    "safety": "ರಾಸಾಯನಿಕ ಬೀಜೋಪಚಾರ ಮಾಡುವಾಗ ಕೈಗವಸು ಧರಿಸಿ. ಪ್ರಮಾಣವನ್ನು ತಜ್ಞರ ಮಾರ್ಗದರ್ಶನದಂತೆ ಬಳಸಿ.",
+    "lastVerified": "2026-03"
   },
   {
-    "keywords": ["ನೀರಾವರಿ", "irrigation", "ನೀರು", "water"],
-    "answerKn": "ನೀರಾವರಿಯನ್ನು ಬೆಳೆ, ಮಣ್ಣಿನ ಪ್ರಕಾರ ಮತ್ತು ಹವಾಮಾನಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಯೋಜಿಸಿ. ಹೊಲದಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ನೋಡಿಕೊಳ್ಳಿ. ಸಾಧ್ಯವಾದಲ್ಲಿ ಹನಿ ನೀರಾವರಿ ಅಥವಾ ಮಣ್ಣಿನ ತೇವಾಂಶ ಪರಿಶೀಲನೆ ಬಳಸಿ.",
-    "answerEn": "Plan irrigation according to the crop, soil type and weather. Avoid waterlogging. Where practical, consider drip irrigation and check soil moisture before watering.",
-    "source": "General irrigation guidance. Local crop-specific advice is recommended.",
+    "id": "crop_paddy_blast",
+    "category": "Pest Management",
+    "keywords": [
+      "ಭತ್ತ", "paddy", "rice", "ಬೆಂಕಿ ರೋಗ", "blast disease", "ಭತ್ತದ ರೋಗ", "leaf blast", "paddy blast", "ಕುತ್ತಿಗೆ ಬೆಂಕಿ ರೋಗ"
+    ],
+    "titleKn": "ಭತ್ತದ ಬೆಂಕಿ ರೋಗ (Blast Disease) ನಿರ್ವಹಣೆ",
+    "titleEn": "Paddy Blast Disease Management",
+    "answerKn": "ಭತ್ತದಲ್ಲಿ ಬೆಂಕಿ ರೋಗವು 'ಪೈರಿಕ್ಯುಲೇರಿಯಾ ಒರೈಜೆ' ಶಿಲೀಂಧ್ರದಿಂದ ಬರುತ್ತದೆ. ಎಲೆಗಳ ಮೇಲೆ ಕಣ್ಣಿನ ಆಕಾರದ (ಮಧ್ಯದಲ್ಲಿ ಬೂದು ಬಣ್ಣ ಮತ್ತು ಅಂಚಿನಲ್ಲಿ ಕಂದು ಬಣ್ಣದ) ಮಚ್ಚೆಗಳು ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತವೆ. ಹತೋಟಿಗೆ ಕ್ರಮಗಳು: 1) ರೋಗ ನಿರೋಧಕ ತಳಿಗಳಾದ ಬಿ.ಆರ್-2655, ಐ.ಆರ್-64 ಆಯ್ಕೆ ಮಾಡಿ. 2) ಸಾರಜನಕ (ಯೂರಿಯಾ) ಗೊಬ್ಬರವನ್ನು ಅತಿಯಾಗಿ ಬಳಸಬೇಡಿ, ಹಂತ ಹಂತವಾಗಿ ನೀಡಿ. 3) ರೋಗ ತೀವ್ರವಾಗಿದ್ದರೆ ಕೃಷಿ ಅಧಿಕಾರಿಯ ಸಲಹೆಯಂತೆ ಟ್ರೈಸೈಕ್ಲಾಜೋಲ್ 75 ಡಬ್ಲ್ಯೂ.ಪಿ (0.6 ಗ್ರಾಂ/ಲೀ ನೀರಿಗೆ) ಸಿಂಪಡಿಸಬಹುದು.",
+    "answerEn": "Paddy blast is caused by the fungus Magnaporthe oryzae (Pyricularia oryzae). Symptoms include spindle/eye-shaped lesions with grey centers and brown borders on leaves and neck rot. Management: 1) Cultivate tolerant varieties like BR-2655 or IR-64. 2) Avoid excess split doses of nitrogen/urea. 3) If infection crosses economic threshold, spray Tricyclazole 75 WP at 0.6g per litre of water under agricultural officer guidance.",
+    "source": "ICAR - National Rice Research Institute & UAS Dharwad",
+    "sourceUrl": "https://icar.gov.in/",
+    "safety": "ಕೀಟನಾಶಕ ಅಥವಾ ಶಿಲೀಂಧ್ರನಾಶಕ ಸಿಂಪಡಿಸುವಾಗ ಗಾಳಿಯ ದಿಕ್ಕಿನಲ್ಲಿ ಸಿಂಪಡಿಸಿ. ಕೊಯ್ಲಿಗೆ 20 ದಿನ ಮೊದಲು ಸಿಂಪರಣೆ ನಿಲ್ಲಿಸಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_maize_fall_armyworm",
+    "category": "Pest Management",
+    "keywords": [
+      "ಮೆಕ್ಕೆಜೋಳ", "maize", "corn", "ಲದ್ದಿ ಹುಳು", "fall armyworm", "ಕತ್ತರಿ ಹುಳು", "armyworm", "ಮೆಕ್ಕೆಜೋಳದ ಹುಳು", "spodoptera frugiperda"
+    ],
+    "titleKn": "ಮೆಕ್ಕೆಜೋಳದ ಸೈನಿಕ ಹುಳು (Fall Armyworm) ಹತೋಟಿ",
+    "titleEn": "Maize Fall Armyworm (FAW) Management",
+    "answerKn": "ಮೆಕ್ಕೆಜೋಳದಲ್ಲಿ ಕತ್ತರಿ ಹುಳು/ಸೈನಿಕ ಹುಳು ಸುಳಿಯನ್ನು ತಿಂದು ಹಿಕ್ಕೆಯನ್ನು ಹೊರಹಾಕುತ್ತದೆ. ಸಮಗ್ರ ನಿರ್ವಹಣೆ: 1) ಹೊಲದಲ್ಲಿ ಹೆಕ್ಟೇರಿಗೆ 10-12 ಲಿಂಗಾಕರ್ಷಕ ಬಲೆಗಳನ್ನು (Pheromone traps) ಅಳವಡಿಸಿ. 2) ಸುಳಿಯಲ್ಲಿ ಬೇವಿನ ಬೀಜದ ಕಷಾಯ (NSKE 5%) ಅಥವಾ ಜೈವಿಕ ಕೀಟನಾಶಕ 'ಬೆವೇರಿಯಾ ಬಸ್ಸಿಯಾನಾ' (5 ಗ್ರಾಂ/ಲೀಟರ್) ಸಿಂಪಡಿಸಿ. 3) ಆರಂಭಿಕ ಹಂತದಲ್ಲಿ ಸುಳಿಗೆ ಮರಳು ಮತ್ತು ಬೂದಿಯ ಮಿಶ್ರಣ (9:1 ಪ್ರಮಾಣ) ಹಾಕುವುದರಿಂದ ಹುಳುಗಳು ನಿಯಂತ್ರಣಕ್ಕೆ ಬರುತ್ತವೆ.",
+    "answerEn": "Fall Armyworm (Spodoptera frugiperda) feeds voraciously on maize whorls leaving distinct ragged holes and sawdust-like frass. Integrated Management: 1) Install 10-12 pheromone traps per hectare for monitoring. 2) Spray Neem Seed Kernel Extract (NSKE 5%) or bio-agent Beauveria bassiana (5g/L) during early vegetative stages. 3) Application of sand and dry wood ash mixture (9:1) directly into plant whorls suffocates early larvae naturally.",
+    "source": "ICAR - Indian Institute of Maize Research & KSDA Raitha Mitra",
+    "sourceUrl": "https://raitamitra.karnataka.gov.in/",
+    "safety": "ಸುಳಿಗೆ ರಾಸಾಯನಿಕ ಹಾಕುವ ಮುನ್ನ ಕಡ್ಡಾಯವಾಗಿ ಸ್ಥಳೀಯ ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರದ (KVK) ವಿಜ್ಞಾನಿಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_sugarcane_management",
+    "category": "Crops",
+    "keywords": [
+      "ಕಬ್ಬು", "sugarcane", "ಕಬ್ಬಿನ ನಾಟಿ", "ಕಬ್ಬಿನ ಇಳುವರಿ", "ಕಬ್ಬು ಬೆಳೆಯುವುದು", "sugarcane planting", "co 86032", "sugarcane varieties"
+    ],
+    "titleKn": "ಕಬ್ಬು ಬೆಳೆ ಸಮಗ್ರ ನಿರ್ವಹಣೆ ಮತ್ತು ತಳಿಗಳು",
+    "titleEn": "Sugarcane Cultivation & High-Yielding Varieties",
+    "answerKn": "ಕರ್ನಾಟಕದಲ್ಲಿ ಕಬ್ಬು ನಾಟಿಗೆ ಜನವರಿ-ಫೆಬ್ರವರಿ (ಏಕಸಾಲಿ) ಅಥವಾ ಜುಲೈ-ಆಗಸ್ಟ್ (ಅಡಸಾಲಿ) ಸೂಕ್ತ. ಉತ್ತಮ ತಳಿಗಳು: Co-86032 (ನಯನ), Co-62175, Co-92005. ಸಾಲಿನಿಂದ ಸಾಲಿಗೆ 4 ರಿಂದ 5 ಅಡಿ ಅಗಲ ಸಾಲು ಪದ್ಧತಿ (Widened row) ಅನುಸರಿಸಿ, ಇದು ಹನಿ ನೀರಾವರಿಗೆ ಮತ್ತು ಯಾಂತ್ರೀಕರಣಕ್ಕೆ ಅತ್ಯುತ್ತಮ. ನಾಟಿಗೆ ಮುನ್ನ ಬಿತ್ತನೆ ಕಬ್ಬಿನ ತುಂಡುಗಳನ್ನು ಕಾರ್ಬೆಂಡಾಜಿಮ್ ದ್ರಾವಣದಲ್ಲಿ ಅದ್ದಿ ಉಪಚರಿಸಿ. ರವದಿ (ಕಬ್ಬಿನ ಒಣ ಎಲೆ) ಹೊದಿಕೆ ಮಾಡುವುದರಿಂದ ಶೇ.30 ರಷ್ಟು ನೀರಿನ ಉಳಿತಾಯವಾಗುತ್ತದೆ.",
+    "answerEn": "In Karnataka, sugarcane is planted during Jan-Feb (Eksali) or July-Aug (Adsali). Prominent high-yielding varieties: Co-86032, Co-62175, and Co-92005. Adopt wide-row spacing (4 to 5 feet) for efficient drip irrigation and mechanization. Treat two-bud setts with Carbendazim solution before planting. In-situ trash mulching between rows conserves up to 30% soil moisture and suppresses weeds.",
+    "source": "ICAR - Sugarcane Breeding Institute & UAS Dharwad",
+    "sourceUrl": "https://sugarcane.icar.gov.in/",
+    "safety": "ಕಬ್ಬಿನ ರವದಿಗೆ ಬೆಂಕಿ ಹಚ್ಚಬೇಡಿ; ಅದು ಮಣ್ಣಿನ ಸೂಕ್ಷ್ಮಜೀವಿಗಳನ್ನು ನಾಶಮಾಡುತ್ತದೆ. ರವದಿಯನ್ನು ಸಾಲುಗಳ ನಡುವೆ ಹೊದಿಸಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_arecanut_koleroga",
+    "category": "Pest Management",
+    "keywords": [
+      "ಅಡಿಕೆ", "arecanut", "ಕೊಳೆರೋಗ", "koleroga", "ಮಹಳಿ ರೋಗ", "fruit rot", "ಅಡಿಕೆ ಕೊಳೆ", "areca nut rot", "ಫೈಟೋಪ್ತೋರಾ"
+    ],
+    "titleKn": "ಅಡಿಕೆ ಮಹಳಿ ಅಥವಾ ಕೊಳೆರೋಗ (Koleroga) ನಿಯಂತ್ರಣ",
+    "titleEn": "Arecanut Koleroga / Fruit Rot Prevention",
+    "answerKn": "ಅಡಿಕೆಯ ಕೊಳೆರೋಗವು ಮಲೆನಾಡು ಮತ್ತು ಕರಾವಳಿಯಲ್ಲಿ ಮುಂಗಾರು ಮಳೆಯ ಸಮಯದಲ್ಲಿ 'ಫೈಟೋಪ್ತೋರಾ ಮೆಕಾಡೋನಿ' ಶಿಲೀಂಧ್ರದಿಂದ ಬರುತ್ತದೆ. ಕಾಯಿಗಳು ಉದುರಿ ಕೊಳೆಯುತ್ತವೆ. ತಡೆಗಟ್ಟುವ ಕ್ರಮಗಳು: 1) ಮುಂಗಾರು ಆರಂಭವಾಗುವ ಮುನ್ನ (ಮೇ ಕೊನೆ ಅಥವಾ ಜೂನ್ ಮೊದಲ ವಾರ) ಅಡಿಕೆ ಗೊಂಚಲುಗಳಿಗೆ ಶೇ. 1 ರ ಬೋರ್ಡೋ ಮಿಶ್ರಣವನ್ನು (Bordeaux mixture 1%) ಸಂಪೂರ್ಣವಾಗಿ ತೊಯ್ಯುವಂತೆ ಸಿಂಪಡಿಸಿ. 2) ಮಳೆಯ ತೀವ್ರತೆಗೆ ತಕ್ಕಂತೆ 40-45 ದಿನಗಳ ನಂತರ ಎರಡನೇ ಸಿಂಪರಣೆ ಮಾಡಿ. 3) ಪ್ಲಾಸ್ಟಿಕ್ ಅಥವಾ ಕೃಷಿ ಹೊದಿಕೆ ಚೀಲಗಳಿಂದ ಗೊಂಚಲನ್ನು ಕಟ್ಟುವುದು (Banding) ಅತ್ಯಂತ ಪರಿಣಾಮಕಾರಿ.",
+    "answerEn": "Arecanut Fruit Rot (Koleroga/Mahali) is caused by Phytophthora meadii during continuous monsoon rains in Malnad and Coastal Karnataka. Preventive Management: 1) Prophylactic spray of 1% Bordeaux mixture on all nut bunches before heavy monsoon onset (late May/early June). 2) Repeat second spray after 40-45 days if rain persists. 3) Covering developing bunches with polythene covers (bunch bagging) provides chemical-free protection against rain wash-off.",
+    "source": "ICAR - CPCRI (Central Plantation Crops Research Institute) & KSNUAHS Shivamogga",
+    "sourceUrl": "https://cpcri.icar.gov.in/",
+    "safety": "ಬೋರ್ಡೋ ಮಿಶ್ರಣವನ್ನು ಮಣ್ಣಿನ ಅಥವಾ ಪ್ಲಾಸ್ಟಿಕ್ ಪಾತ್ರೆಗಳಲ್ಲಿ ಮಾತ್ರ ತಯಾರಿಸಿ. ಕಬ್ಬಿಣ ಅಥವಾ ಅಲ್ಯೂಮಿನಿಯಂ ಪಾತ್ರೆ ಬಳಸಬೇಡಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_tomato_leafcurl",
+    "category": "Pest Management",
+    "keywords": [
+      "ಟೊಮೆಟೊ", "tomato", "ಎಲೆ ಸುರುಟು ರೋಗ", "leaf curl", "ಬಿಳಿ ನೊಣ", "whitefly", "tomato disease", "ಟೊಮೇಟೊ ರೋಗ"
+    ],
+    "titleKn": "ಟೊಮೆಟೊ ಎಲೆ ಸುರುಟು ರೋಗ ಮತ್ತು ಬಿಳಿ ನೊಣ ನಿಯಂತ್ರಣ",
+    "titleEn": "Tomato Leaf Curl Virus & Whitefly Management",
+    "answerKn": "ಟೊಮೆಟೊ ಎಲೆ ಸುರುಟು ರೋಗವು ವೈರಸ್‌ನಿಂದ ಉಂಟಾಗಿದ್ದು, ಇದನ್ನು ಬಿಳಿ ನೊಣಗಳು (Whitefly) ಒಂದು ಗಿಡದಿಂದ ಇನ್ನೊಂದಕ್ಕೆ ಹರಡುತ್ತವೆ. ಎಲೆಗಳು ಚಿಕ್ಕದಾಗಿ ಮೇಲ್ಮುಖವಾಗಿ ಸುರುಟಿಕೊಳ್ಳುತ್ತವೆ. ನಿರ್ವಹಣೆ: 1) ಹಳದಿ ಜಿಗುಟು ಬಲೆಗಳನ್ನು (Yellow sticky traps) ಎಕರೆಗೆ 15-20 ಅಳವಡಿಸಿ ಬಿಳಿ ನೊಣಗಳನ್ನು ಆಕರ್ಷಿಸಿ ನಾಶಪಡಿಸಿ. 2) ರೋಗಗ್ರಸ್ತ ಗಿಡಗಳನ್ನು ಆರಂಭದಲ್ಲೇ ಬುಡಸಹಿತ ಕಿತ್ತು ಸುಟ್ಟುಹಾಕಿ. 3) ಸಸಿಮಡಿಯನ್ನು ನೈಲಾನ್ ನೆಟ್ (40 ಮೆಶ್) ನಿಂದ ಮುಚ್ಚಿ ರಕ್ಷಿಸಿ. 4) ಬೇವಿನ ಎಣ್ಣೆ (5 ಮಿಲಿ/ಲೀಟರ್) ಸಿಂಪಡಿಸಿ ಬಿಳಿ ನೊಣ ನಿಯಂತ್ರಿಸಿ.",
+    "answerEn": "Tomato Leaf Curl Virus (ToLCV) is transmitted by whiteflies (Bemisia tabaci). Infected plants exhibit severe stunting and upward curling of leaves. Management: 1) Install 15-20 yellow sticky traps per acre to monitor and trap whiteflies. 2) Uproot and destroy virus-infected plants immediately to prevent field transmission. 3) Raise seedlings under 40-mesh insect-proof nylon nets. 4) Spray neem oil (5 ml/L) or safe insecticidal soap to reduce whitefly vectors.",
+    "source": "ICAR - Indian Institute of Horticultural Research (IIHR), Bengaluru",
+    "sourceUrl": "https://iihr.res.in/",
+    "safety": "ವೈರಸ್ ರೋಗಕ್ಕೆ ನೇರ ಔಷಧವಿಲ್ಲ; ವಾಹಕ ಕೀಟವಾದ ಬಿಳಿ ನೊಣವನ್ನು ನಿಯಂತ್ರಿಸುವುದೇ ಮುಖ್ಯ ಪರಿಹಾರ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_groundnut_cultivation",
+    "category": "Crops",
+    "keywords": [
+      "ಕಡಲೆಕಾಯಿ", "groundnut", "ಶೇಂಗಾ", "peanut", "ಕಡಲೆಕಾಯಿ ಬಿತ್ತನೆ", "groundnut varieties", "tikk disease", "ತಿಕ್ಕಾ ರೋಗ"
+    ],
+    "titleKn": "ಕಡಲೆಕಾಯಿ (ಶೇಂಗಾ) ಬೆಳೆ ಮತ್ತು ತಿಕ್ಕಾ ರೋಗ ನಿಯಂತ್ರಣ",
+    "titleEn": "Groundnut Cultivation & Tikka Disease Management",
+    "answerKn": "ಕರ್ನಾಟಕದಲ್ಲಿ ಕಡಲೆಕಾಯಿ ಪ್ರಮುಖ ಎಣ್ಣೆಕಾಳು ಬೆಳೆ. ಖಾರಿಫ್ ಬಿತ್ತನೆಗೆ ಜೂನ್-ಜುಲೈ ಮತ್ತು ರಬಿ/ಬೇಸಿಗೆಗೆ ನವೆಂಬರ್-ಡಿಸೆಂಬರ್ ಸೂಕ್ತ. ಜನಪ್ರಿಯ ತಳಿಗಳು: TMV-2, GPBD-4, KDG-128, ಮತ್ತು G-2-52. ಎಕರೆಗೆ 40-45 ಕೆಜಿ ಬೀಜ ಬೇಕಾಗುತ್ತದೆ. ಜಿಪ್ಸಮ್ (Gypsum) ಗೊಬ್ಬರವನ್ನು ಎಕರೆಗೆ 200 ಕೆಜಿ ಯಂತೆ ಹೂವಾಡುವ ಹಂತದಲ್ಲಿ ಹಾಕುವುದರಿಂದ ಕಾಯಿಗಳು ಗಟ್ಟಿಯಾಗಿ ಕಾಳು ತುಂಬಿಕೊಳ್ಳುತ್ತವೆ. ತಿಕ್ಕಾ ಎಲೆಚುಕ್ಕೆ ರೋಗ ಕಂಡುಬಂದರೆ ಮ್ಯಾಂಕೋಜೆಬ್ ಶಿಲೀಂಧ್ರನಾಶಕ (2 ಗ್ರಾಂ/ಲೀ) ಸಿಂಪಡಿಸಿ.",
+    "answerEn": "Groundnut is a leading oilseed in Karnataka. Kharif sowing occurs in June-July and Rabi/Summer in Nov-Dec. High-performing varieties: TMV-2, GPBD-4 (foliar disease resistant), KDG-128. Seed rate: 40-45 kg pods per acre. Apply Gypsum at 200 kg/acre at 35-40 days after sowing (flowering/pegging stage) to ensure well-filled pods and calcium nutrition. For Tikka leaf spot, spray Mancozeb at 2g/L water.",
+    "source": "UAS Dharwad & ICAR - Directorate of Groundnut Research",
+    "sourceUrl": "https://dgr.icar.gov.in/",
+    "safety": "ಜಿಪ್ಸಮ್ ಹಾಕುವಾಗ ಮಣ್ಣಿನಲ್ಲಿ ಸಾಕಷ್ಟು ತೇವಾಂಶವಿರಬೇಕು. ಒಣ ಮಣ್ಣಿನಲ್ಲಿ ಹಾಕಬೇಡಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "scheme_pm_kisan",
+    "category": "Government Schemes",
+    "keywords": [
+      "ಪಿಎಂ ಕಿಸಾನ್", "pm kisan", "pm-kisan", "ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ", "kisan samman nidhi", "6000 ರೂಪಾಯಿ", "ರೈತರ ಆರ್ಥಿಕ ನೆರವು", "pmkisan status", "ekyc"
+    ],
+    "titleKn": "ಪಿಎಂ-ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ ಯೋಜನೆ (PM-KISAN)",
+    "titleEn": "PM-KISAN Samman Nidhi Scheme",
+    "answerKn": "ಪ್ರಧಾನ ಮಂತ್ರಿ ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ ಯೋಜನೆಯಡಿ ಎಲ್ಲಾ ಅರ್ಹ ಭೂಮಾಲೀಕ ರೈತ ಕುಟುಂಬಗಳಿಗೆ ವರ್ಷಕ್ಕೆ ₹6,000 ಆರ್ಥಿಕ ನೆರವನ್ನು ₹2,000 ರ ಮೂರು ಸಮಾನ ಕಂತುಗಳಲ್ಲಿ ನೇರವಾಗಿ ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ (DBT) ಜಮಾ ಮಾಡಲಾಗುತ್ತದೆ. ಅಗತ್ಯ ದಾಖಲೆಗಳು: 1) ಆಧಾರ್ ಕಾರ್ಡ್, 2) ಜಮೀನಿನ ಪಹಣಿ (RTC), 3) ಆಧಾರ್ ಲಿಂಕ್ ಆದ ಬ್ಯಾಂಕ್ ಖಾತೆ (NPCI Seeding), 4) ಕಡ್ಡಾಯ e-KYC. ಗ್ರಾಮ ಒನ್ ಅಥವಾ ಸಿಎಸ್‍ಸಿ ಕೇಂದ್ರದಲ್ಲಿ ಅಥವಾ pmkisan.gov.in ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ನೋಂದಣಿ ಮಾಡಿಕೊಳ್ಳಬಹುದು.",
+    "answerEn": "Under PM-KISAN, eligible landholding farmer families receive financial support of ₹6,000 per year, disbursed in three equal 4-monthly installments of ₹2,000 directly into Aadhaar-seeded bank accounts (DBT). Mandatory requirements: 1) Aadhaar card, 2) Land Record / RTC, 3) NPCI-seeded bank account, 4) Completed biometric or OTP e-KYC. Farmers can apply online at pmkisan.gov.in or through Grama One / CSC centers.",
+    "source": "Ministry of Agriculture & Farmers Welfare, Govt. of India",
+    "sourceUrl": "https://pmkisan.gov.in/",
+    "safety": "ಯಾವುದೇ ಮಧ್ಯವರ್ತಿಗಳಿಗೆ ಹಣ ನೀಡಬೇಡಿ. ಸರ್ಕಾರದ ಅಧಿಕೃತ ಪೋರ್ಟಲ್ ಅಥವಾ ಗ್ರಾಮ ಒನ್ ಕೇಂದ್ರವನ್ನು ಮಾತ್ರ ಸಂಪರ್ಕಿಸಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "scheme_raitha_siri",
+    "category": "Government Schemes",
+    "keywords": [
+      "ರೈತ ಸಿರಿ", "raitha siri", "ಸಿರಿಧಾನ್ಯ ಪ್ರೋತ್ಸಾಹ ಧನ", "millet subsidy", "ಕರ್ನಾಟಕ ಸಿರಿಧಾನ್ಯ", "millet incentive", "millet scheme karnataka"
+    ],
+    "titleKn": "ಕರ್ನಾಟಕ ರೈತ ಸಿರಿ ಯೋಜನೆ (ಸಿರಿಧಾನ್ಯ ಪ್ರೋತ್ಸಾಹಧನ)",
+    "titleEn": "Karnataka Raitha Siri Scheme (Millet Promotion)",
+    "answerKn": "ಕರ್ನಾಟಕ ಸರ್ಕಾರವು ಸಿರಿಧಾನ್ಯ ಬೆಳೆಯುವ ರೈತರಿಗೆ ಪ್ರೋತ್ಸಾಹ ನೀಡಲು 'ರೈತ ಸಿರಿ' ಯೋಜನೆಯನ್ನು ಜಾರಿಗೆ ತಂದಿದೆ. ಊದಲು, ನವಣೆ, ಹಾರಕ, ಕೊರಲೆ, ಸಾಮೆ ಮತ್ತು ಬರಗು ಬೆಳೆಯುವ ರೈತರಿಗೆ ಪ್ರತಿ ಹೆಕ್ಟೇರ್‌ಗೆ ₹10,000 ಪ್ರೋತ್ಸಾಹಧನವನ್ನು ನೇರವಾಗಿ ಅವರ ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ ನೀಡಲಾಗುತ್ತದೆ (ಗರಿಷ್ಠ 2 ಹೆಕ್ಟೇರ್‌ಗೆ ₹20,000 ವರೆಗೆ). ಅರ್ಹತೆ: ರೈತರು ತಮ್ಮ ಪಹಣಿಯಲ್ಲಿ ಸಿರಿಧಾನ್ಯ ಬೆಳೆ ನೋಂದಣಿ (Crop Survey) ಮಾಡಿಸಿರಬೇಕು ಮತ್ತು FRUITS ಐಡಿ ಹೊಂದಿರಬೇಕು.",
+    "answerEn": "The Government of Karnataka provides direct cash assistance under the 'Raitha Siri' scheme to promote millet cultivation. Farmers growing minor millets (Foxtail, Little, Kodo, Barnyard, Proso, and Browntop millet) receive an incentive of ₹10,000 per hectare directly into bank accounts (capped at 2 hectares/₹20,000). Eligibility: Millets must be registered in the seasonal Digital Crop Survey and the farmer must hold a valid FRUITS ID.",
+    "source": "Department of Agriculture, Government of Karnataka (Raitha Mitra)",
+    "sourceUrl": "https://raitamitra.karnataka.gov.in/",
+    "safety": "ಪ್ರೋತ್ಸಾಹಧನ ಪಡೆಯಲು ಡಿಜಿಟಲ್ ಬೆಳೆ ಸಮೀಕ್ಷೆಯಲ್ಲಿ (Bele Samikshe) ಬೆಳೆ ಸರಿಯಾಗಿ ದಾಖಲಾಗಿರುವುದು ಕಡ್ಡಾಯ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "scheme_pmfby_crop_insurance",
+    "category": "Government Schemes",
+    "keywords": [
+      "ಬೆಳೆ ವಿಮೆ", "crop insurance", "pmfby", "ಫಸಲ್ ಬಿಮಾ", "fasal bima", "ಬೆಳೆ ನಷ್ಟ ಪರಿಹಾರ", "samrakshane", "ವಿಮಾ ನೋಂದಣಿ"
+    ],
+    "titleKn": "ಪ್ರಧಾನ ಮಂತ್ರಿ ಫಸಲ್ ಬಿಮಾ ಯೋಜನೆ (ಬೆಳೆ ವಿಮೆ - ಸಂರಕ್ಷಣೆ)",
+    "titleEn": "Pradhan Mantri Fasal Bima Yojana (PMFBY / Samrakshane)",
+    "answerKn": "ಪ್ರಕೃತಿ ವಿಕೋಪ, ಬರ, ನೆರೆ ಅಥವಾ ಕೀಟಬಾಧೆಯಿಂದ ಬೆಳೆ ನಷ್ಟವಾದರೆ ರೈತರಿಗೆ ಆರ್ಥಿಕ ರಕ್ಷಣೆ ಒದಗಿಸಲು ಈ ಯೋಜನೆ ಇದೆ. ಪ್ರೀಮಿಯಂ ದರಗಳು: ಮುಂಗಾರು ಬೆಳೆಗಳಿಗೆ ಶೇ. 2, ಹಿಂಗಾರು ಬೆಳೆಗಳಿಗೆ ಶೇ. 1.5, ಮತ್ತು ವಾಣಿಜ್ಯ/ತೋಟಗಾರಿಕೆ ಬೆಳೆಗಳಿಗೆ ಶೇ. 5. ಉಳಿದ ಪ್ರೀಮಿಯಂ ಮೊತ್ತವನ್ನು ಸರ್ಕಾರವೇ ಭರಿಸುತ್ತದೆ. ಬೆಳೆ ಹಾನಿಯಾದ 72 ಗಂಟೆಗಳ ಒಳಗೆ 'Crop Insurance App' ಮೂಲಕ ಅಥವಾ ಟೋಲ್ ಫ್ರೀ ಸಂಖ್ಯೆ 1800-180-2117 ಗೆ ಕರೆ ಮಾಡಿ ಮಾಹಿತಿ ನೀಡುವುದು ಕಡ್ಡಾಯ.",
+    "answerEn": "PMFBY protects farmers against yield losses and localized calamities (drought, flood, unseasonal hail, pests). Farmers pay minimal premium: 2% for Kharif crops, 1.5% for Rabi crops, and 5% for annual horticultural/commercial crops, with the remaining paid by government subsidy. In case of localized crop damage, farmers must notify within 72 hours via the Crop Insurance App or Samrakshane portal.",
+    "source": "Ministry of Agriculture & Samrakshane Karnataka Portal",
+    "sourceUrl": "https://samrakshane.karnataka.gov.in/",
+    "safety": "ಸ್ಥಳೀಯ ಬೆಳೆ ಹಾನಿಯಾದರೆ 72 ಗಂಟೆಯೊಳಗೆ ಫೋಟೋ ಸಮೇತ ದೂರು ದಾಖಲಿಸದಿದ್ದರೆ ವಿಮಾ ಪರಿಹಾರ ಸಿಗುವುದು ಕಷ್ಟಕರ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "scheme_krishi_bhagya",
+    "category": "Government Schemes",
+    "keywords": [
+      "ಕೃಷಿ ಭಾಗ್ಯ", "krishi bhagya", "ಕೃಷಿ ಹೊಂಡ", "farm pond", "ಪಾಲಿಹೌಸ್ ಸಬ್ಸಿಡಿ", "polyhouse subsidy", "ತುಂತುರು ನೀರಾವರಿ ಸಬ್ಸಿಡಿ", "ಕೃಷಿ ಹೊಂಡ ಯೋಜನೆ"
+    ],
+    "titleKn": "ಕರ್ನಾಟಕ ಕೃಷಿ ಭಾಗ್ಯ ಯೋಜನೆ (ಕೃಷಿ ಹೊಂಡ ಮತ್ತು ಪಾಲಿಹೌಸ್)",
+    "titleEn": "Karnataka Krishi Bhagya Scheme (Farm Ponds & Polyhouse)",
+    "answerKn": "ಮಳೆಯಾಶ್ರಿತ ಕೃಷಿಯನ್ನು ಸುಸ್ಥಿರಗೊಳಿಸಲು ಕರ್ನಾಟಕ ಸರ್ಕಾರ 'ಕೃಷಿ ಭಾಗ್ಯ' ಯೋಜನೆಯನ್ನು ಮರುಜಾರಿಗೊಳಿಸಿದೆ. ಈ ಯೋಜನೆಯಡಿ: 1) ಕೃಷಿ ಹೊಂಡ (Farm pond) ನಿರ್ಮಾಣ, 2) ಪಾಲಿಥೀನ್ ಹೊದಿಕೆ (Tarpaulin lining), 3) ಡೀಸೆಲ್/ಸೌರ ಪಂಪ್‌ಸೆಟ್, 4) ತುಂತುರು ಅಥವಾ ಹನಿ ನೀರಾವರಿ ಘಟಕ, 5) ಪಾಲಿಹೌಸ್ ನೆರಳಿನ ಮನೆ ನಿರ್ಮಾಣಕ್ಕೆ ಸಾಮಾನ್ಯ ವರ್ಗದ ರೈತರಿಗೆ ಶೇ. 80 ಮತ್ತು ಪರಿಶಿಷ್ಟ ಜಾತಿ/ಪಂಗಡದ ರೈತರಿಗೆ ಶೇ. 90 ರಷ್ಟು ಸಹಾಯಧನ ನೀಡಲಾಗುತ್ತದೆ. ರೈತ ಸಂಪರ್ಕ ಕೇಂದ್ರದಲ್ಲಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಬಹುದು.",
+    "answerEn": "Revitalized by the Karnataka Government for rainfed dryland agriculture, Krishi Bhagya provides composite packages: 1) Farm pond excavation, 2) Polythene tarpaulin lining to stop seepage, 3) Diesel/solar pumpsets, 4) Micro-irrigation (sprinkler/drip kits), and 5) Shade-net polyhouses. Subsidies are up to 80% for general farmers and up to 90% for SC/ST farmers. Apply at local Raitha Samparka Kendras (RSK).",
+    "source": "Karnataka Department of Agriculture (KSDA)",
+    "sourceUrl": "https://raitamitra.karnataka.gov.in/",
+    "safety": "ಕೃಷಿ ಹೊಂಡದ ಸುತ್ತಲೂ ಪ್ರಾಣಿ ಮತ್ತು ಜನರ ಸುರಕ್ಷತೆಗಾಗಿ ಕಡ್ಡಾಯವಾಗಿ ಮುಳ್ಳುತಂತಿಯ ಬೇಲಿ ಅಳವಡಿಸಬೇಕು.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "irrigation_drip_micro",
+    "category": "Irrigation",
+    "keywords": [
+      "ಹನಿ ನೀರಾವರಿ", "drip irrigation", "ತುಂತುರು ನೀರಾವರಿ", "sprinkler", "ನೀರಾವರಿ ಸಬ್ಸಿಡಿ", "pmksy", "drip subsidy karnataka", "ನೀರಿನ ಉಳಿತಾಯ"
+    ],
+    "titleKn": "ಹನಿ ನೀರಾವರಿ ಪದ್ಧತಿ ಮತ್ತು ಸಹಾಯಧನ ಮಾಹಿತಿ",
+    "titleEn": "Drip Irrigation Technology & PMKSY Subsidies",
+    "answerKn": "ಹನಿ ನೀರಾವರಿಯಿಂದ ಶೇಕಡಾ 50 ರಿಂದ 70 ರಷ್ಟು ನೀರಿನ ಉಳಿತಾಯವಾಗುವುದಲ್ಲದೆ, ಕಳೆ ನಿಯಂತ್ರಣ ಮತ್ತು ರಸಾವರಿ (Fertigation - ನೀರಿನ ಮೂಲಕ ಗೊಬ್ಬರ) ನೀಡುವುದು ಸುಲಭವಾಗುತ್ತದೆ. ಪ್ರಧಾನ ಮಂತ್ರಿ ಕೃಷಿ ಸಿಂಚಾಯಿ ಯೋಜನೆ (PMKSY - Per Drop More Crop) ಅಡಿಯಲ್ಲಿ ಕರ್ನಾಟಕದಲ್ಲಿ: ಸಣ್ಣ ಮತ್ತು ಅತಿ ಸಣ್ಣ ರೈತರಿಗೆ (SC/ST) ಶೇ. 90 ರಷ್ಟು ಮತ್ತು ಸಾಮಾನ್ಯ ವರ್ಗದ ರೈತರಿಗೆ ಶೇ. 75 ರಷ್ಟು ಸಬ್ಸಿಡಿ ಲಭ್ಯವಿದೆ. ಅಗತ್ಯ ದಾಖಲೆ: ಪಹಣಿ (RTC), ಆಧಾರ್ ಕಾರ್ಡ್, ಬ್ಯಾಂಕ್ ಪಾಸ್ ಬುಕ್, ಮತ್ತು ನೀರಿನ ಲಭ್ಯತೆಯ ದೃಢೀಕರಣ ಪತ್ರ.",
+    "answerEn": "Drip irrigation saves 50-70% water, minimizes weed growth, and enables fertigation (direct fertilizer application through emitters). Under PMKSY (Per Drop More Crop) in Karnataka, small and marginal SC/ST farmers receive up to 90% subsidy, and general category farmers receive up to 75% subsidy. Required documents: RTC/Pahani, Aadhaar, bank passbook, and water source certificate.",
+    "source": "Karnataka Horticulture & Agriculture Department & PMKSY",
     "sourceUrl": "https://pmksy.gov.in/",
-    "safety": "Water requirements vary by crop stage and local conditions."
+    "safety": "ಡ್ರಿಪ್ ಫಿಲ್ಟರ್‌ಗಳನ್ನು (ಡಿಸ್ಕ್ ಅಥವಾ ಸ್ಕ್ರೀನ್ ಫಿಲ್ಟರ್) ವಾರಕ್ಕೊಮ್ಮೆ ಸ್ವಚ್ಛಗೊಳಿಸಿ; ಇಲ್ಲದಿದ್ದರೆ ಹನಿ ರಂಧ್ರಗಳು ಮುಚ್ಚಿಹೋಗುತ್ತವೆ.",
+    "lastVerified": "2026-03"
   },
   {
-    "keywords": ["ಬೆಳೆ ಪರಿವರ್ತನೆ", "crop rotation", "rotation"],
-    "answerKn": "ಒಂದೇ ಹೊಲದಲ್ಲಿ ನಿರಂತರವಾಗಿ ಒಂದೇ ಬೆಳೆಯನ್ನು ಬೆಳೆಸುವುದಕ್ಕಿಂತ, ಸ್ಥಳೀಯ ಪರಿಸ್ಥಿತಿಗೆ ಹೊಂದುವ ವಿಭಿನ್ನ ಕುಟುಂಬದ ಬೆಳೆಗಳನ್ನು ಪರ್ಯಾಯವಾಗಿ ಬೆಳೆಸುವ ಬಗ್ಗೆ ಕೃಷಿ ಅಧಿಕಾರಿಯಿಂದ ಸಲಹೆ ಪಡೆಯಿರಿ. ಇದು ಕೆಲವು ಕೀಟ ಮತ್ತು ಮಣ್ಣಿನ ಸಮಸ್ಯೆಗಳನ್ನು ಕಡಿಮೆ ಮಾಡಲು ಸಹಾಯ ಮಾಡಬಹುದು.",
-    "answerEn": "Instead of repeatedly growing the same crop, ask a local agriculture officer about rotating suitable crops from different plant families. This can help manage some pest and soil problems.",
-    "source": "General crop-rotation guidance. Confirm crop choices locally.",
-    "sourceUrl": "https://www.icar.gov.in/",
-    "safety": "Suitable rotation depends on the region, season, water availability and market."
+    "id": "soil_jeevamrutha_preparation",
+    "category": "Organic Farming",
+    "keywords": [
+      "ಜೀವಾಮೃತ", "jeevamrutha", "ಸಾವಯವ ಕೃಷಿ", "organic farming", "ಬೀಜಾಮೃತ", "ಪಂಚಗವ್ಯ", "ದೇಸಿ ಹಸುವಿನ ಸಗಣಿ", "natural farming", "ಝೀರೋ ಬಜೆಟ್ ಕೃಷಿ"
+    ],
+    "titleKn": "ನೈಸರ್ಗಿಕ ಜೀವಾಮೃತ ತಯಾರಿಸುವ ಸುಲಭ ವಿಧಾನ",
+    "titleEn": "Preparation of Organic Jeevamrutha Bio-Fertilizer",
+    "answerKn": "ಒಂದು ಎಕರೆ ಹೊಲಕ್ಕೆ 200 ಲೀಟರ್ ಜೀವಾಮೃತ ಸಾಕು. ತಯಾರಿಸುವ ವಿಧಾನ: ಒಂದು ಪ್ಲಾಸ್ಟಿಕ್ ಡ್ರಮ್ಮಿನಲ್ಲಿ 200 ಲೀಟರ್ ನೀರು ತುಂಬಿಸಿ. ಅದಕ್ಕೆ 10 ಕೆಜಿ ದೇಸಿ ಹಸುವಿನ ಹಸಿ ಸಗಣಿ, 5 ರಿಂದ 10 ಲೀಟರ್ ಹಸುವಿನ ಗೋಮೂತ್ರ, 2 ಕೆಜಿ ಸಾವಯವ ಬೆಲ್ಲ, 2 ಕೆಜಿ ದ್ವಿದಳ ಧಾನ್ಯದ ಹಿಟ್ಟು (ಕಡಲೆ ಅಥವಾ ಹೆಸರು ಹಿಟ್ಟು), ಮತ್ತು ಒಂದು ಹಿಡಿ ಬದುವಿನ ಫಲವತ್ತಾದ ಮಣ್ಣು ಸೇರಿಸಿ. ಬಿದಿರಿನ ಕೋಲಿನಿಂದ ಗಡಿಯಾರದ ದಿಕ್ಕಿನಲ್ಲಿ ದಿನಕ್ಕೆ 2 ಬಾರಿ ಕಲಸಿ. ನೆರಳಿನಲ್ಲಿ 48 ರಿಂದ 72 ಗಂಟೆ ಕೊಳೆಯಲು ಬಿಡಿ. ಇದನ್ನು ನೀರಾವರಿ ಜೊತೆ ಅಥವಾ ಎಕರೆಗೆ ಸಿಂಪಡಿಸಿ.",
+    "answerEn": "To prepare 200 liters of Jeevamrutha for one acre: In a plastic drum, mix 200L clean water, 10 kg fresh desi cow dung, 5-10L desi cow urine, 2 kg organic jaggery, 2 kg pulse flour (chickpea/gram), and a handful of virgin forest/bund soil. Stir clockwise twice daily with a wooden stick. Keep covered in the shade for 48 to 72 hours. Apply through irrigation water or as a 10% foliar spray to enrich beneficial soil microbes.",
+    "source": "ICAR - National Centre of Organic and Natural Farming",
+    "sourceUrl": "https://ncof.dacnet.nic.in/",
+    "safety": "ಜೀವಾಮೃತವನ್ನು ಪ್ಲಾಸ್ಟಿಕ್ ಅಥವಾ ಸಿಮೆಂಟ್ ತೊಟ್ಟಿಯಲ್ಲಿ ಮಾತ್ರ ತಯಾರಿಸಿ; ಕಬ್ಬಿಣದ ಪಾತ್ರೆ ಬಳಸಬೇಡಿ. ತಯಾರಿಸಿದ 7 ದಿನಗಳೊಳಗೆ ಬಳಸಿ.",
+    "lastVerified": "2026-03"
   },
   {
-    "keywords": ["ಕೀಟ", "pest", "ಹುಳು", "insect"],
-    "answerKn": "ಕೀಟ ಕಂಡುಬಂದರೆ ಮೊದಲು ಯಾವ ಕೀಟ ಮತ್ತು ಯಾವ ಬೆಳೆ ಎಂಬುದನ್ನು ಸರಿಯಾಗಿ ಗುರುತಿಸಿ. ಎಲೆಗಳ ಎರಡೂ ಬದಿಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಹಾನಿಯ ಚಿತ್ರವನ್ನು ಸ್ಥಳೀಯ ಕೃಷಿ ಅಧಿಕಾರಿಗೆ ತೋರಿಸಿ. ಗುರುತಿಸದೆ ಕೀಟನಾಶಕ ಸಿಂಪಡಿಸಬೇಡಿ.",
-    "answerEn": "If you notice pests, first identify the pest and crop correctly. Inspect both sides of leaves and show photos of the damage to a local agriculture officer. Do not spray pesticides before identification.",
-    "source": "General integrated pest-management guidance. Seek crop-specific expert advice.",
-    "sourceUrl": "https://niphm.gov.in/",
-    "safety": "This assistant does not diagnose pests or prescribe pesticide products or dosages."
-  },
-  {
-    "keywords": ["ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ", "soil test", "ಪರೀಕ್ಷೆ"],
-    "answerKn": "ನಿಮ್ಮ ಹತ್ತಿರದ ಮಣ್ಣು ಪರೀಕ್ಷಾ ಪ್ರಯೋಗಾಲಯ ಅಥವಾ ಕೃಷಿ ಇಲಾಖೆಯನ್ನು ಸಂಪರ್ಕಿಸಿ. ಹೊಲದ ವಿವಿಧ ಭಾಗಗಳಿಂದ ಸೂಚಿಸಿದ ವಿಧಾನದಲ್ಲಿ ಮಣ್ಣಿನ ಮಾದರಿ ಸಂಗ್ರಹಿಸಿ. ವರದಿ ಬಂದ ನಂತರ ಅದರ ಶಿಫಾರಸಿನಂತೆ ಕ್ರಮ ಕೈಗೊಳ್ಳಿ.",
-    "answerEn": "Contact a nearby soil-testing laboratory or agriculture department. Collect samples from different parts of the field using their recommended method. Follow the recommendations in the test report.",
-    "source": "Government of India's Soil Health Card portal",
+    "id": "soil_testing_procedure",
+    "category": "Soil Health",
+    "keywords": [
+      "ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ", "soil testing", "soil health card", "ಮಣ್ಣು ಸಂಗ್ರಹ", "ಮಣ್ಣಿನ ಮಾದರಿ", "soil lab", "ph ಮೌಲ್ಯ", "ಮಣ್ಣಿನ ಆರೋಗ್ಯ ಕಾರ್ಡ್"
+    ],
+    "titleKn": "ಮಣ್ಣಿನ ಮಾದರಿ ಸಂಗ್ರಹಣೆ ಮತ್ತು ಮಣ್ಣು ಪರೀಕ್ಷೆ",
+    "titleEn": "Soil Sample Collection & Soil Health Card",
+    "answerKn": "ಮಣ್ಣಿನ ಫಲವತ್ತತೆ ಮತ್ತು pH ತಿಳಿಯಲು ಪ್ರತಿ 2-3 ವರ್ಷಕ್ಕೊಮ್ಮೆ ಮಣ್ಣು ಪರೀಕ್ಷೆ ಮಾಡಿಸುವುದು ಕಡ್ಡಾಯ. ಮಾದರಿ ಸಂಗ್ರಹಿಸುವ ವಿಧಾನ: 1) ಹೊಲದಲ್ಲಿ 'V' ಆಕಾರದಲ್ಲಿ 6 ರಿಂದ 9 ಇಂಚು ಆಳದ ಗುಂಡಿ ತೋಡಿ. 2) ಮೇಲಿನಿಂದ ಕೆಳಗಿನವರೆಗೆ 1 ಇಂಚು ದಪ್ಪದ ಮಣ್ಣಿನ ಪದರವನ್ನು ಬದಿಯಿಂದ ಕೆತ್ತಿ ಸಂಗ್ರಹಿಸಿ. 3) ಹೊಲದ 8-10 ಸ್ಥಳಗಳಲ್ಲಿ ಹೀಗೆ ಸಂಗ್ರಹಿಸಿ, ಎಲ್ಲವನ್ನೂ ಚೆನ್ನಾಗಿ ಮಿಶ್ರಣ ಮಾಡಿ. 4) ನೆರಳಿನಲ್ಲಿ ಒಣಗಿಸಿ, ವೃತ್ತಾಕಾರದಲ್ಲಿ ಹರಡಿ ನಾಲ್ಕು ಭಾಗ ಮಾಡಿ, ಎದುರು-ಬದುರಿನ ಎರಡು ಭಾಗ ತೆಗೆದು ಅರ್ಧ ಕೆಜಿ ಮಣ್ಣು ಉಳಿಸಿ. ಬಟ್ಟೆ ಚೀಲದಲ್ಲಿ ತುಂಬಿ ರೈತ ಸಂಪರ್ಕ ಕೇಂದ್ರ ಅಥವಾ ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರಕ್ಕೆ ಕಳುಹಿಸಿ.",
+    "answerEn": "Soil testing every 2-3 years establishes balanced fertilizer requirements and soil pH. Collection method: 1) Dig 'V'-shaped pits 15-20 cm deep at 8-10 zigzag spots in the field. 2) Shave a 1-inch slice of soil from the vertical edge from top to bottom. 3) Thoroughly mix samples on a clean sheet, shade dry, and use the quartering technique to reduce to 500g. 4) Place in a clean cloth bag labeled with survey number and submit to Raitha Samparka Kendra (RSK) or KVK.",
+    "source": "Government of India - Soil Health Card Portal & KSDA",
     "sourceUrl": "https://soilhealth.dac.gov.in/",
-    "safety": "Follow the laboratory's sample collection instructions."
+    "safety": "ಮರದ ಬುಡ, ಕಾಲುವೆ ಬದಿ, ಗೊಬ್ಬರದ ಗುಂಡಿ ಅಥವಾ ಕಣಗಳ ಬಳಿ ಮಣ್ಣಿನ ಮಾದರಿ ಸಂಗ್ರಹಿಸಬೇಡಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "weather_monsoon_agro_advisory",
+    "category": "Weather & Seasons",
+    "keywords": [
+      "ಹವಾಮಾನ", "weather", "ಮುಂಗಾರು ಮಳೆ", "monsoon karnataka", "ಬರ ಪರಿಸ್ಥಿತಿ", "ಮಳೆ ಮುನ್ಸೂಚನೆ", "weather advisory", "ರೈತರಿಗೆ ಮಳೆ ಮಾಹಿತಿ"
+    ],
+    "titleKn": "ಕರ್ನಾಟಕ ಮುಂಗಾರು ಹವಾಮಾನ ಮತ್ತು ಬೆಳೆ ಸಲಹೆ",
+    "titleEn": "Karnataka Monsoon & Seasonal Agro-Advisory",
+    "answerKn": "ಕರ್ನಾಟಕದಲ್ಲಿ ನೈಋತ್ಯ ಮುಂಗಾರು ಸಾಮಾನ್ಯವಾಗಿ ಜೂನ್ ಮೊದಲ ವಾರದಲ್ಲಿ ಪ್ರವೇಶಿಸುತ್ತದೆ. ಮಳೆ ತಡವಾದರೆ ಅಥವಾ ಕೊರತೆಯಾದರೆ ಕಡಿಮೆ ಅವಧಿಯ ಮತ್ತು ಬರ ನಿರೋಧಕ ಬೆಳೆಗಳಾದ ರಾಗಿ (GPU-28), ಹೆಸರು, ಅಲಸಂದೆ, ಸಜ್ಜೆ ಅಥವಾ ಸಿರಿಧಾನ್ಯಗಳನ್ನು ಬಿತ್ತನೆ ಮಾಡಿ. ಮಳೆ ಜಾಸ್ತಿಯಾಗಿ ಹೊಲದಲ್ಲಿ ನೀರು ನಿಂತರೆ, ತಕ್ಷಣ ನೀರು ಬಸಿದು ಹೋಗಲು ಬಸಿಗಾಲುವೆಗಳನ್ನು (Drainage channels) ತೆಗೆಯಿರಿ. ಸ್ಥಳೀಯ ಹವಾಮಾನ ಮುನ್ಸೂಚನೆಗಾಗಿ 'ಮೇಘದೂತ್' (Meghdoot App) ಅಥವಾ ಕೃಷಿ ಇಲಾಖೆಯ ಮುನ್ಸೂಚನೆ ವೀಕ್ಷಿಸಿ.",
+    "answerEn": "Southwest monsoon typically arrives in Karnataka during the first week of June. In case of delayed rains, switch to contingency crops like short-duration Ragi (GPU-28), Green gram, Cowpea, Pearl millet, or minor millets. Ensure broad-bed furrows or field drainage channels to prevent waterlogging during heavy downpours. Farmers should track IMD block-level forecasts via the official 'Meghdoot' and 'Damini' mobile applications.",
+    "source": "India Meteorological Department (IMD) & GKVK Agromet Advisory",
+    "sourceUrl": "https://mausam.imd.gov.in/",
+    "safety": "ಗುಡುಗು ಮತ್ತು ಸಿಡಿಲು ಹೊಡೆಯುವ ಸಮಯದಲ್ಲಿ ಹೊಲಗಳಲ್ಲಿ ಅಥವಾ ಮರಗಳ ಕೆಳಗೆ ನಿಲ್ಲಬೇಡಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_cotton_bollworm",
+    "category": "Pest Management",
+    "keywords": [
+      "ಹತ್ತಿ", "cotton", "ಗುಲಾಬಿ ಕಾಯಿಕೊರೆಯುವ ಹುಳು", "pink bollworm", "ಹತ್ತಿ ರೋಗ", "bollworm", "cotton pest", "ಬೆಳ್ಳಂಬಿ ರೋಗ"
+    ],
+    "titleKn": "ಹತ್ತಿಯಲ್ಲಿ ಗುಲಾಬಿ ಕಾಯಿಕೊರೆಯುವ ಹುಳು ನಿರ್ವಹಣೆ",
+    "titleEn": "Cotton Pink Bollworm (PBW) Management",
+    "answerKn": "ಗುಲಾಬಿ ಕಾಯಿಕೊರೆಯುವ ಹುಳು (Pectinophora gossypiella) ಹತ್ತಿಯ ಹೂವು ಮತ್ತು ಕಾಯಿಗಳಲ್ಲಿ ರಂಧ್ರ ಕೊರೆದು ಹಾನಿ ಮಾಡುತ್ತದೆ. ರೋಸೆಟ್ ಹೂವುಗಳು (Rosette flowers) ಇದರ ಮುಖ್ಯ ಲಕ್ಷಣ. ನಿರ್ವಹಣೆ: 1) ಬಿತ್ತನೆಯ 45 ದಿನಗಳ ನಂತರ ಹೆಕ್ಟೇರಿಗೆ 8-10 ಲಿಂಗಾಕರ್ಷಕ ಬಲೆಗಳನ್ನು (Pheromone traps) ಬೆಳೆಯ ಎತ್ತರಕ್ಕಿಂತ ಒಂದು ಅಡಿ ಎತ್ತರದಲ್ಲಿ ಅಳವಡಿಸಿ. 2) ಹಾನಿಗೊಳಗಾದ ಹೂವು ಮತ್ತು ಕಾಯಿಗಳನ್ನು ಸಂಗ್ರಹಿಸಿ ನಾಶಪಡಿಸಿ. 3) ಪ್ರತಿ ಹೆಕ್ಟೇರಿಗೆ ಟ್ರೈಕೊಗ್ರಾಮ (Trichogramma) ಪರತಂತ್ರ ಜೀವಿ ಕಾರ್ಡ್‌ಗಳನ್ನು (1.5 ಲಕ್ಷ/ಹೆಕ್ಟೇರ್) ಬಿಡುಗಡೆ ಮಾಡಿ ಜೈವಿಕ ನಿಯಂತ್ರಣ ಸಾಧಿಸಿ.",
+    "answerEn": "Pink Bollworm (PBW) infests squares, flowers, and bolls causing typical 'rosetted flowers' and damaged lint. Integrated Strategy: 1) Install 8-10 pheromone traps per hectare at 45 days after sowing, placed 1 foot above crop canopy. 2) Manually collect and destroy rosetted flowers and dropped bolls. 3) Release egg parasitoid Trichogramma bactrae at 1.5 lakh eggs/ha at weekly intervals starting from flower initiation.",
+    "source": "ICAR - Central Institute for Cotton Research (CICR) & UAS Raichur",
+    "sourceUrl": "https://cicr.icar.gov.in/",
+    "safety": "ಹುಳು ಹಾನಿಯ ತೀವ್ರತೆ ಶೇ. 10 ಕ್ಕಿಂತ ಹೆಚ್ಚಿರುವಾಗ ಮಾತ್ರ ತಜ್ಞರ ಅನುಮತಿಯೊಂದಿಗೆ ನಿಗದಿತ ಶಿಫಾರಸು ಪಾಲಿಸಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "crop_onion_purple_blotch",
+    "category": "Pest Management",
+    "keywords": [
+      "ಈರುಳ್ಳಿ", "onion", "ನೇರಳೆ ಮಚ್ಚೆ ರೋಗ", "purple blotch", "ಈರುಳ್ಳಿ ರೋಗ", "onion thrips", "ನುಸಿ ಹುಳು", "ಈರುಳ್ಳಿ ಕೊಳೆ"
+    ],
+    "titleKn": "ಈರುಳ್ಳಿ ನೇರಳೆ ಮಚ್ಚೆ ರೋಗ ಮತ್ತು ನುಸಿ ಹುಳು ಹತೋಟಿ",
+    "titleEn": "Onion Purple Blotch & Thrips Management",
+    "answerKn": "ಕರ್ನಾಟಕದ ಪ್ರಮುಖ ಈರುಳ್ಳಿ ಬೆಳೆಯುವ ಜಿಲ್ಲೆಗಳಲ್ಲಿ (ಚಿತ್ರದುರ್ಗ, ಬಾಗಲಕೋಟೆ, ಧಾರವಾಡ) ನೇರಳೆ ಮಚ್ಚೆ ರೋಗವು 'ಆಲ್ಟರ್ನೇರಿಯಾ ಪೊರ್ರಿ' ಶಿಲೀಂಧ್ರದಿಂದ ಬರುತ್ತದೆ. ಎಲೆಗಳ ಮೇಲೆ ಮಧ್ಯದಲ್ಲಿ ನೇರಳೆ ಬಣ್ಣದ ನೀಳವಾದ ಮಚ್ಚೆಗಳು ಉಂಟಾಗಿ ಎಲೆ ಒಣಗುತ್ತದೆ. ನಿರ್ವಹಣೆ: 1) ಬೀಜೋಪಚಾರಕ್ಕೆ ಥೈರಮ್ ಅಥವಾ ಕ್ಯಾಪ್ಟನ್ (2 ಗ್ರಾಂ/ಕೆಜಿ) ಬಳಸಿ. 2) ನುಸಿ ಹುಳುಗಳು (Thrips) ರೋಗ ಹರಡುವುದರಿಂದ ನೀಲಿ ಜಿಗುಟು ಬಲೆಗಳನ್ನು (Blue sticky traps) ಅಳವಡಿಸಿ. 3) ರೋಗ ಕಂಡುಬಂದರೆ ಮ್ಯಾಂಕೋಜೆಬ್ (2.5 ಗ್ರಾಂ/ಲೀಟರ್) ನೊಂದಿಗೆ ಜಿಗುಟು ದ್ರವ (Sticker) ಬೆರೆಸಿ ಸಿಂಪಡಿಸಿ.",
+    "answerEn": "Purple blotch (Alternaria porri) causes sunken purple elliptical lesions on onion leaves and flower stalks, heavily impacting Chitradurga, Bagalkot, and Dharwad belts. Management: 1) Seed treatment with Thiram or Captan at 2g/kg seed. 2) Install blue sticky traps to monitor and trap thrips which wound the leaves and exacerbate fungal spread. 3) Spray Mancozeb 75 WP (2.5 g/L) combined with an agricultural wetting/sticking agent (0.5 ml/L) during cloudy, humid weather.",
+    "source": "ICAR - Directorate of Onion and Garlic Research & IIHR",
+    "sourceUrl": "https://dogr.icar.gov.in/",
+    "safety": "ಈರುಳ್ಳಿ ಎಲೆಯ ಮೇಣದ ಪದರ ಇರುವುದರಿಂದ ಸಿಂಪಡಿಸುವಾಗ ಕಡ್ಡಾಯವಾಗಿ ಜಿಗುಟು ದ್ರವ (Wetting agent) ಸೇರಿಸಬೇಕು.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "organic_vermicompost_technology",
+    "category": "Organic Farming",
+    "keywords": [
+      "ಎರೆಹುಳು ಗೊಬ್ಬರ", "vermicompost", "ಗೊಬ್ಬರ", "ಕಾಂಪೋಸ್ಟ್", "compost", "ಮಣ್ಣಿನ ಸಾವಯವ ಇಂಗಾಲ", "organic carbon", "ಎರೆಹುಳು ತೊಟ್ಟಿ"
+    ],
+    "titleKn": "ಎರೆಹುಳು ಗೊಬ್ಬರ (ವರ್ಮಿಕಾಂಪೋಸ್ಟ್) ಉತ್ಪಾದನೆ",
+    "titleEn": "Vermicompost Production & Soil Carbon Enrichment",
+    "answerKn": "ಎರೆಹುಳು ಗೊಬ್ಬರವು ಮಣ್ಣಿನ ಸಾವಯವ ಇಂಗಾಲವನ್ನು (Organic Carbon) ಹೆಚ್ಚಿಸುವ ಅತ್ಯುತ್ತಮ ಗೊಬ್ಬರ. ತಯಾರಿಕೆ: 1) 10 ಅಡಿ ಉದ್ದ, 3 ಅಡಿ ಅಗಲ ಮತ್ತು 2 ಅಡಿ ಆಳದ ತೊಟ್ಟಿ ಮಾಡಿ. 2) ತಳದಲ್ಲಿ ಒಣ ಹುಲ್ಲು, ತೆಂಗಿನ ನಾರು ಅಥವಾ ಕೃಷಿ ತ್ಯಾಜ್ಯದ 6 ಇಂಚಿನ ಪದರ ಹಾಕಿ. 3) ಅದರ ಮೇಲೆ ಅರೆಕೊಳೆತ ಸಗಣಿ ಮತ್ತು ಕೃಷಿ ಕಸವನ್ನು ಹಂತ ಹಂತವಾಗಿ ತುಂಬಿಸಿ. 4) 'ಐಸೀನಿಯಾ ಫೋಟಿಡಾ' (Eisenia foetida) ಜಾತಿಯ ಎರೆಹುಳುಗಳನ್ನು ಬಿಡಿ (ತೊಟ್ಟಿಗೆ 1 ರಿಂದ 2 ಕೆಜಿ). 5) ಯಾವಾಗಲೂ ಶೇ. 30-40 ತೇವಾಂಶ ಮತ್ತು ನೆರಳು ಕಾಪಾಡಿ. 45-60 ದಿನಗಳಲ್ಲಿ ಚಹಾದ ಪುಡಿಯಂತಿರುವ ಉತ್ತಮ ಗೊಬ್ಬರ ಸಿದ್ಧವಾಗುತ್ತದೆ.",
+    "answerEn": "Vermicompost enhances soil organic carbon, moisture retention, and microbial biodiversity. Method: 1) Construct a bed 10 ft long, 3 ft wide, and 2 ft deep in shade. 2) Lay a 6-inch base layer of dry crop residues/coconut coir. 3) Layer with partially decomposed farmyard manure and green biomass. 4) Introduce composting earthworms like Eisenia foetida (1-2 kg per bed). 5) Maintain 30-40% moisture by sprinkling water regularly. High-grade nutrient-rich granular vermicompost is harvested within 45-60 days.",
+    "source": "ICAR - National Academy of Agricultural Research Management & GKVK",
+    "sourceUrl": "https://icar.gov.in/",
+    "safety": "ಎರೆಹುಳು ತೊಟ್ಟಿಗೆ ನೇರ ಬಿಸಿಲು ಬೀಳದಂತೆ ನೋಡಿಕೊಳ್ಳಿ ಮತ್ತು ಇರುವೆ ಅಥವಾ ಕೋಳಿಗಳ ಬಾಧೆಯಿಂದ ರಕ್ಷಿಸಿ.",
+    "lastVerified": "2026-03"
+  },
+  {
+    "id": "helpline_karnataka_farmers",
+    "category": "Government Schemes",
+    "keywords": [
+      "ಕೃಷಿ ಸಹಾಯವಾಣಿ", "helpline", "kisan call center", "ಕೃಷಿ ಅಧಿಕಾರಿ ಸಂಪರ್ಕ", "ಕೃಷಿ ಮಾಹಿತಿ ಕೇಂದ್ರ", "call center", "ರೈತ ಮಿತ್ರ ದೂರವಾಣಿ", "ಸಹಾಯವಾಣಿ ಸಂಖ್ಯೆ"
+    ],
+    "titleKn": "ಕರ್ನಾಟಕ ರೈತ ಸಹಾಯವಾಣಿ ಮತ್ತು ಉಚಿತ ಮಾಹಿತಿ ಕೇಂದ್ರಗಳು",
+    "titleEn": "Karnataka Farmer Toll-Free Helplines & Support Centers",
+    "answerKn": "ರೈತರು ಯಾವುದೇ ಕೃಷಿ ಸಮಸ್ಯೆಗಳಿಗೆ ಸರ್ಕಾರದ ಉಚಿತ ಸಹಾಯವಾಣಿಗಳನ್ನು ಸಂಪರ್ಕಿಸಬಹುದು: 1) ಕಿಸಾನ್ ಕಾಲ್ ಸೆಂಟರ್ (Kisan Call Center): 1800-180-1551 (ಬೆಳಗ್ಗೆ 6 ರಿಂದ ರಾತ್ರಿ 10 ರವರೆಗೆ ಕನ್ನಡದಲ್ಲೇ ಸಲಹೆ ಲಭ್ಯ). 2) ಕರ್ನಾಟಕ ಕೃಷಿ ಇಲಾಖೆ ಸಹಾಯವಾಣಿ: 080-22212804 / 1800-425-3553. 3) ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ ಧ್ವನಿ ಸಂದೇಶ: ಕಿಸಾನ್ ಸುವಿಧಾ ಮೊಬೈಲ್ ಆಪ್. 4) ಮಣ್ಣು ಪರೀಕ್ಷೆ ಮತ್ತು ಬೀಜ ವಿತರಣೆಗೆ ನಿಮ್ಮ ಹೋಬಳಿಯ 'ರೈತ ಸಂಪರ್ಕ ಕೇಂದ್ರ' (RSK) ಅನ್ನು ಭೇಟಿ ಮಾಡಿ.",
+    "answerEn": "Farmers can obtain immediate agricultural advice through official toll-free services: 1) Kisan Call Centre (KCC): 1800-180-1551 (Operates 6:00 AM to 10:00 PM every day with live Kannada-speaking agricultural scientists). 2) Karnataka Agriculture Department Helpline: 1800-425-3553. 3) Nearest assistance: Raitha Samparka Kendra (RSK) at the Hobli level. 4) Official Apps: Kisan Suvidha and Bele Samikshe.",
+    "source": "Department of Agriculture, Govt. of Karnataka & Ministry of Agriculture",
+    "sourceUrl": "https://raitamitra.karnataka.gov.in/",
+    "safety": "ಸಹಾಯವಾಣಿಗಳಿಗೆ ಕರೆ ಮಾಡುವಾಗ ನಿಮ್ಮ ಬೆಳೆ, ಜಮೀನಿನ ಸರ್ವೆ ನಂಬರ್ ಮತ್ತು ರೋಗದ ಲಕ್ಷಣಗಳನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ತಿಳಿಸಿ.",
+    "lastVerified": "2026-03"
   }
 ]

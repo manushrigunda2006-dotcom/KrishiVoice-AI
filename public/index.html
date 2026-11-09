@@ -2,78 +2,539 @@
 <html lang="kn">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#173d2c">
-  <meta name="description" content="KrishiVoice AI - Kannada-first voice access to reviewed farming information.">
-  <title>KrishiVoice AI | ನಿಮ್ಮ ಕೃಷಿ, ನಿಮ್ಮ ಧ್ವನಿ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="theme-color" content="#143826">
+  <meta name="description" content="KrishiVoice AI 2.0 - AI-Powered Multilingual Agricultural Intelligence Platform for Karnataka farmers. Ask farming questions via voice in Kannada.">
+  <title>KrishiVoice AI 2.0 | ನಿಮ್ಮ ಕೃಷಿ. ನಿಮ್ಮ ಧ್ವನಿ. ನಿಮ್ಮ ಭವಿಷ್ಯ.</title>
+  
+  <!-- Google Fonts: DM Sans & Noto Sans Kannada -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Noto+Sans+Kannada:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <!-- Top Navigation Bar -->
   <header class="topbar">
-    <a class="brand" href="#"><span class="brand-mark">ಕೃ</span><span>KrishiVoice <b>AI</b><small>ನಿಮ್ಮ ಕೃಷಿ, ನಿಮ್ಮ ಧ್ವನಿ</small></span></a>
-    <nav><a href="#how">ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ</a><a href="#about">ನಮ್ಮ ಬಗ್ಗೆ</a><button class="lang" id="languageToggle">ಕನ್ನಡ / EN</button></nav>
+    <div class="topbar-inner">
+      <a class="brand" href="#" aria-label="KrishiVoice AI Home">
+        <div class="brand-icon-wrapper">
+          <svg class="brand-leaf-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+          <span class="brand-kn-letter">ಕೃ</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">KrishiVoice <b>AI</b></span>
+          <span class="brand-tagline" data-i18n="tagline">ನಿಮ್ಮ ಕೃಷಿ. ನಿಮ್ಮ ಧ್ವನಿ. ನಿಮ್ಮ ಭವಿಷ್ಯ.</span>
+        </div>
+      </a>
+
+      <!-- Quick Nav and Utilities -->
+      <nav class="nav-links">
+        <a href="#assistant" class="nav-link active" data-i18n="navAssistant">ಕೃಷಿ ಸಹಾಯಕ</a>
+        <a href="#topics" class="nav-link" data-i18n="navTopics">ವಿಷಯಗಳು</a>
+        <a href="#schemes" class="nav-link" data-i18n="navSchemes">ಯೋಜನೆಗಳು</a>
+        <a href="#helpline" class="nav-link" data-i18n="navHelpline">ಸಹಾಯವಾಣಿ</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <!-- Live System Status Badge -->
+        <div class="status-pill" id="systemStatusPill" title="Speech & Server Status">
+          <span class="status-dot"></span>
+          <span class="status-label" id="statusLabel">ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…</span>
+        </div>
+
+        <!-- Language Selector Dropdown -->
+        <div class="lang-selector">
+          <button class="lang-btn" id="langBtn" aria-expanded="false" aria-haspopup="true">
+            <svg class="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span id="currentLangLabel">ಕನ್ನಡ (KN)</span>
+            <span class="arrow-down">▾</span>
+          </button>
+          <div class="lang-menu" id="langMenu">
+            <button class="lang-option active" data-lang="kn">ಕನ್ನಡ (Kannada)</button>
+            <button class="lang-option" data-lang="en">English (English)</button>
+            <button class="lang-option" data-lang="hi">हिंदी (Hindi)</button>
+            <button class="lang-option" data-lang="te">తెలుగు (Telugu)</button>
+            <button class="lang-option" data-lang="ta">தமிழ் (Tamil)</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow"><span></span> KANNADA-FIRST FARMING ASSISTANT</div>
-        <h1>ನಿಮ್ಮ ಕೃಷಿ.<br><em>ನಿಮ್ಮ ಧ್ವನಿ.</em></h1>
-        <p class="lead">ಕೃಷಿ ಮಾಹಿತಿಯನ್ನು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಕೇಳಿ. ಮಾತನಾಡಿ, ಪ್ರಶ್ನೆ ಕೇಳಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿದ ಮಾರ್ಗದರ್ಶನ ಪಡೆಯಿರಿ.</p>
-        <div class="hero-actions"><a class="primary-btn" href="#assistant">ಮಾತನಾಡಲು ಪ್ರಾರಂಭಿಸಿ <span>↗</span></a><span class="trust-note">ಸರಳ • ಧ್ವನಿ ಆಧಾರಿತ • ಕನ್ನಡ</span></div>
-        <div class="hero-stats"><div><b>ಕನ್ನಡ</b><span>ಮೊದಲ ಆದ್ಯತೆ</span></div><div><b>ಧ್ವನಿ</b><span>ಸುಲಭ ಸಂವಹನ</span></div><div><b>ಮೂಲಗಳು</b><span>ಪರಿಶೀಲಿಸಿದ ಮಾಹಿತಿ</span></div></div>
-      </div>
-      <div class="hero-art">
-        <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
-        <div class="field-lines"></div>
-        <div class="floating-card"><span class="leaf-icon">✳</span><div><b>ಕೃಷಿ ಮಾಹಿತಿ</b><small>ನಿಮ್ಮ ಕೈಯಲ್ಲಿ, ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ</small></div><span class="pulse-dot"></span></div>
-        <div class="art-caption">GROW WITH KNOWLEDGE <span>01 / 03</span></div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-sparkle">🌾</span>
+            <span data-i18n="heroBadge">ಕರ್ನಾಟಕದ ರೈತರಿಗಾಗಿ ಕೃತಕ ಬುದ್ಧಿಮತ್ತೆ ಸಹಾಯಕ</span>
+          </div>
+          <h1 class="hero-title" data-i18n="heroTitle">
+            ನಿಮ್ಮ ಕೃಷಿ. <span class="gradient-text">ನಿಮ್ಮ ಧ್ವನಿ.</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">
+            ಬೆಳೆ, ರೋಗ ನಿರ್ವಹಣೆ, ಮಣ್ಣಿನ ಫಲವತ್ತತೆ ಮತ್ತು ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಬಗ್ಗೆ ನಿಮ್ಮ ಮಾತೃಭಾಷೆಯಲ್ಲಿ ಧ್ವನಿಯ ಮೂಲಕ ಪ್ರಶ್ನೆ ಕೇಳಿ, ಪರಿಶೀಲಿಸಿದ ಅಧಿಕೃತ ಉತ್ತರ ಪಡೆಯಿರಿ.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#assistant" class="btn-hero-primary" id="startVoiceHeroBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="22"/>
+              </svg>
+              <span data-i18n="heroVoiceBtn">ಧ್ವನಿಯಲ್ಲಿ ಮಾತನಾಡಿ</span>
+            </a>
+            <a href="#topics" class="btn-hero-secondary">
+              <span data-i18n="heroExploreBtn">ಮಾಹಿತಿ ವಿಷಯಗಳು ನೋಡಿ</span>
+              <span class="btn-arrow">→</span>
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-strip">
+            <div class="trust-item">
+              <div class="trust-icon">✓</div>
+              <div class="trust-text">
+                <strong data-i18n="trust1Title">ಪರಿಶೀಲಿಸಿದ ಮಾಹಿತಿ</strong>
+                <span data-i18n="trust1Desc">ICAR & KSDA ಅಧಿಕೃತ ಆಧಾರ</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🎙️</div>
+              <div class="trust-text">
+                <strong data-i18n="trust2Title">Gnani Prisma AI</strong>
+                <span data-i18n="trust2Desc">ನಿಖರ ಕನ್ನಡ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🛡️</div>
+              <div class="trust-text">
+                <strong data-i18n="trust3Title">ಸುರಕ್ಷಿತ ಕೃಷಿ ಸಲಹೆ</strong>
+                <span data-i18n="trust3Desc">ಅನಧಿಕೃತ ರಾಸಾಯನಿಕ ಶಿಫಾರಸು ಇಲ್ಲ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-graphic">
+          <div class="agro-card-preview">
+            <div class="preview-header">
+              <span class="preview-tag" data-i18n="cardPreviewTag">ಲೈವ್ ಸಹಾಯಕ</span>
+              <span class="preview-pulse"></span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-avatar">🌱</div>
+              <div class="preview-dialogue">
+                <div class="preview-q" data-i18n="previewQuestion">"ರಾಗಿ ಬೆಳೆಯ ಬಿತ್ತನೆಗೆ ಯಾವುದು ಸೂಕ್ತ ಸಮಯ?"</div>
+                <div class="preview-a" data-i18n="previewAnswer">"ಕರ್ನಾಟಕದಲ್ಲಿ ಮುಂಗಾರು ಹಂಗಾಮಿನಲ್ಲಿ ಜುಲೈ-ಆಗಸ್ಟ್ ತಿಂಗಳು ರಾಗಿ ಬಿತ್ತನೆಗೆ ಅತ್ಯಂತ ಸೂಕ್ತ. GPU-28 ಮತ್ತು ML-365 ಉತ್ತಮ ತಳಿಗಳು..."</div>
+              </div>
+            </div>
+            <div class="preview-footer">
+              <span class="preview-source">🏛️ UAS Bangalore (GKVK)</span>
+              <span class="preview-voice-badge">🔊 Gnani Voice</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- Category Filter Bar -->
+    <section class="topics-section" id="topics">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow" data-i18n="topicsEyebrow">EXPLORE BY CATEGORY</span>
+          <h2 class="section-title" data-i18n="topicsTitle">ಕೃಷಿ ವಿಷಯಗಳ ವರ್ಗಗಳು</h2>
+          <p class="section-desc" data-i18n="topicsDesc">ನಿಮಗೆ ಬೇಕಾದ ವಿಷಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ ಮತ್ತು ನೇರವಾಗಿ ಪ್ರಶ್ನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.</p>
+        </div>
+
+        <div class="category-pills" id="categoryPills">
+          <button class="pill-btn active" data-category="ALL" data-i18n="catAll">ಎಲ್ಲವೂ (All)</button>
+          <button class="pill-btn" data-category="Crops" data-i18n="catCrops">🌾 ಬೆಳೆಗಳು (Crops)</button>
+          <button class="pill-btn" data-category="Pest Management" data-i18n="catPest">🐛 ಕೀಟ ಮತ್ತು ರೋಗ (Pest & Disease)</button>
+          <button class="pill-btn" data-category="Government Schemes" data-i18n="catSchemes">🏛️ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು (Govt Schemes)</button>
+          <button class="pill-btn" data-category="Soil Health" data-i18n="catSoil">🧪 ಮಣ್ಣಿನ ಆರೋಗ್ಯ (Soil Health)</button>
+          <button class="pill-btn" data-category="Irrigation" data-i18n="catIrrigation">💧 ನೀರಾವರಿ (Irrigation)</button>
+          <button class="pill-btn" data-category="Organic Farming" data-i18n="catOrganic">🌿 ಸಾವಯವ ಕೃಷಿ (Organic)</button>
+          <button class="pill-btn" data-category="Weather & Seasons" data-i18n="catWeather">⛅ ಹವಾಮಾನ (Weather)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main AI Assistant Workspace -->
     <section class="assistant-section" id="assistant">
-      <div class="section-heading"><div><div class="eyebrow">YOUR FARMING COMPANION</div><h2>ಇಂದು ಏನು ತಿಳಿಯಬೇಕು?</h2><p>ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ ಅಥವಾ ಟೈಪ್ ಮಾಡಿ.</p></div><div class="online-pill"><span></span> ಸಹಾಯಕ ಸಿದ್ಧವಾಗಿದೆ</div></div>
-      <div class="assistant-grid">
-        <div class="ask-card">
-          <div class="card-top"><span class="step-number">01</span><span>ನಿಮ್ಮ ಪ್ರಶ್ನೆ</span><span class="mic-label">VOICE / TEXT</span></div>
-          <div class="mic-area">
-            <button id="recordBtn" class="mic-button" aria-label="Start recording"><span class="mic-ring"></span><span class="mic-symbol">🎙</span></button>
-            <b id="recordTitle">ಮಾತನಾಡಲು ಒತ್ತಿರಿ</b>
-            <small id="recordHint">ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ</small>
-            <div class="recording-bars" id="recordingBars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="section-container">
+        <div class="assistant-grid">
+          
+          <!-- Card 1: Farmer Input (Voice & Text) -->
+          <div class="assistant-card input-card">
+            <div class="card-head">
+              <div class="step-indicator">
+                <span class="step-num">01</span>
+                <div>
+                  <h3 class="card-title" data-i18n="step1Title">ನಿಮ್ಮ ಪ್ರಶ್ನೆ ಕೇಳಿ</h3>
+                  <p class="card-subtitle" data-i18n="step1Subtitle">ಧ್ವನಿಯ ಮೂಲಕ ಮಾತನಾಡಿ ಅಥವಾ ಟೈಪ್ ಮಾಡಿ</p>
+                </div>
+              </div>
+              <div class="input-mode-badge" id="inputModeBadge">
+                <span class="mode-icon">🎙️</span>
+                <span class="mode-text">Gnani Prisma Voice</span>
+              </div>
+            </div>
+
+            <!-- Voice Interaction Pod -->
+            <div class="mic-pod" id="micPod">
+              <button class="mic-ring-button" id="recordBtn" aria-label="Start Voice Recording">
+                <div class="mic-pulse-ring"></div>
+                <div class="mic-pulse-ring delay"></div>
+                <div class="mic-inner-circle">
+                  <svg class="mic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
+                  </svg>
+                </div>
+              </button>
+
+              <div class="mic-status-text">
+                <strong id="recordStatusTitle" data-i18n="micReadyTitle">ಮಾತನಾಡಲು ಮೈಕ್ ಒತ್ತಿರಿ</strong>
+                <span id="recordStatusHint" data-i18n="micReadyHint">ಕನ್ನಡದಲ್ಲಿ ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ</span>
+              </div>
+
+              <!-- Animated Sound Wave Visualizer -->
+              <div class="wave-visualizer" id="waveVisualizer" aria-hidden="true">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+              </div>
+            </div>
+
+            <!-- Text Input Area -->
+            <div class="text-input-wrap">
+              <div class="input-label-row">
+                <label for="questionInput" class="input-label" data-i18n="typeInputLabel">ಅಥವಾ ಇಲ್ಲಿ ನೇರವಾಗಿ ಟೈಪ್ ಮಾಡಿ</label>
+                <button class="clear-btn" id="clearInputBtn" type="button" data-i18n="clearBtn">ತೆರವುಗೊಳಿಸಿ</button>
+              </div>
+              <div class="textarea-container">
+                <textarea 
+                  id="questionInput" 
+                  rows="3" 
+                  placeholder="ಉದಾಹರಣೆ: ರಾಗಿ ಬಿತ್ತನೆಗೆ ಸೂಕ್ತ ಸಮಯ ಯಾವುದು? ಅಥವಾ ಕಬ್ಬಿನ ಹನಿ ನೀರಾವರಿ..."
+                  aria-label="Enter farming question"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Submit Button & Action Bar -->
+            <div class="card-action-bar">
+              <div class="service-note" id="serviceNote">
+                <span class="check-icon">✓</span>
+                <span id="serviceNoteText" data-i18n="speechReadyText">ಕನ್ನಡ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ ಸಿದ್ಧವಾಗಿದೆ</span>
+              </div>
+              <button class="btn-submit" id="askSubmitBtn" type="button">
+                <span class="submit-text" data-i18n="getAnswerBtn">ಉತ್ತರ ಪಡೆಯಿರಿ</span>
+                <span class="submit-arrow">→</span>
+              </button>
+            </div>
+
+            <!-- Quick Example Suggestions -->
+            <div class="quick-suggestions-box">
+              <span class="suggestions-title" data-i18n="quickSuggestionsTitle">ಜನಪ್ರಿಯ ಪ್ರಶ್ನೆಗಳು:</span>
+              <div class="suggestion-chips" id="suggestionChips">
+                <button class="chip-item" data-query="ರಾಗಿ ಬಿತ್ತನೆ">🌾 ರಾಗಿ ಬಿತ್ತನೆ ತಳಿಗಳು</button>
+                <button class="chip-item" data-query="ಭತ್ತದ ಬೆಂಕಿ ರೋಗ">🔥 ಭತ್ತದ ಬೆಂಕಿ ರೋಗ</button>
+                <button class="chip-item" data-query="ಪಿಎಂ ಕಿಸಾನ್ ಯೋಜನೆ">💰 ಪಿಎಂ ಕಿಸಾನ್ ₹6000</button>
+                <button class="chip-item" data-query="ಜೀವಾಮೃತ ತಯಾರಿಕೆ">🌿 ಸಾವಯವ ಜೀವಾಮೃತ</button>
+                <button class="chip-item" data-query="ಹನಿ ನೀರಾವರಿ ಸಬ್ಸಿಡಿ">💧 ಹನಿ ನೀರಾವರಿ ಸಬ್ಸಿಡಿ</button>
+                <button class="chip-item" data-query="ಅಡಿಕೆ ಕೊಳೆರೋಗ">🌴 ಅಡಿಕೆ ಕೊಳೆರೋಗ</button>
+              </div>
+            </div>
           </div>
-          <label class="input-label" for="question">ಅಥವಾ ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ</label>
-          <textarea id="question" rows="3" placeholder="ಉದಾ: ಮಣ್ಣಿನ ಆರೋಗ್ಯವನ್ನು ಹೇಗೆ ಸುಧಾರಿಸಬಹುದು?"></textarea>
-          <div class="ask-footer"><span id="apiStatus">ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…</span><button id="askBtn" class="ask-button">ಉತ್ತರ ಪಡೆಯಿರಿ <span>→</span></button></div>
-          <div class="suggestions"><span>ಉದಾಹರಣೆಗಳು</span><button data-question="ಮಣ್ಣಿನ ಆರೋಗ್ಯವನ್ನು ಹೇಗೆ ಸುಧಾರಿಸಬಹುದು?">ಮಣ್ಣಿನ ಆರೋಗ್ಯ</button><button data-question="ಬೆಳೆಗಳಿಗೆ ನೀರಾವರಿ ಹೇಗೆ ಮಾಡಬೇಕು?">ನೀರಾವರಿ</button><button data-question="ಬೆಳೆಗಳಲ್ಲಿ ಕೀಟ ಕಂಡರೆ ಏನು ಮಾಡಬೇಕು?">ಕೀಟ ನಿರ್ವಹಣೆ</button></div>
+
+          <!-- Card 2: Assistant Response (Verified Answer) -->
+          <div class="assistant-card answer-card" id="answerCard">
+            <div class="card-head">
+              <div class="step-indicator">
+                <span class="step-num">02</span>
+                <div>
+                  <h3 class="card-title" data-i18n="step2Title">ಪರಿಶೀಲಿಸಿದ ಉತ್ತರ</h3>
+                  <p class="card-subtitle" data-i18n="step2Subtitle">ಕೃಷಿ ತಜ್ಞರು ಮತ್ತು ಸಂಶೋಧನಾ ಸಂಸ್ಥೆಗಳ ಮಾರ್ಗದರ್ಶನ</p>
+                </div>
+              </div>
+              <div class="answer-state-pill" id="answerStatePill">
+                <span id="answerStateText" data-i18n="stateWaiting">ನಿರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ</span>
+              </div>
+            </div>
+
+            <!-- Empty Placeholder State -->
+            <div class="empty-state" id="emptyAnswerState">
+              <div class="empty-illustration">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2a10 10 0 1 0 10 10H12V2Z"/>
+                  <path d="M12 12 2.1 10.05"/>
+                  <path d="M12 12l4.95 8.95"/>
+                </svg>
+              </div>
+              <h4 class="empty-heading" data-i18n="emptyHeading">ನಿಮ್ಮ ಪ್ರಶ್ನೆ ಕೇಳಲು ನಾವು ಸಿದ್ಧರಿದ್ದೇವೆ</h4>
+              <p class="empty-desc" data-i18n="emptyDesc">
+                ಮೈಕ್ ಒತ್ತಿ ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ ಅಥವಾ ಮೇಲೆ ನೀಡಿರುವ ಪ್ರಶ್ನೆಗಳಲ್ಲಿ ಒಂದನ್ನು ಆರಿಸಿ. ನಿಖರವಾದ ಕೃಷಿ ಮಾಹಿತಿ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.
+              </p>
+            </div>
+
+            <!-- Loading Spinner State -->
+            <div class="loading-state" id="loadingAnswerState" hidden>
+              <div class="loading-spinner"></div>
+              <h4 class="loading-heading" data-i18n="loadingHeading">ಪರಿಶೀಲಿಸಿದ ದತ್ತಸಂಚಯದಲ್ಲಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ…</h4>
+              <p class="loading-desc" data-i18n="loadingDesc">ICAR, ವಿಶ್ವವಿದ್ಯಾಲಯಗಳು ಮತ್ತು ಕೃಷಿ ಇಲಾಖೆಯ ಮಾಹಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ.</p>
+            </div>
+
+            <!-- Verified Answer Content Display -->
+            <div class="answer-payload" id="answerPayload" hidden>
+              <!-- Category and Match Metadata Header -->
+              <div class="answer-meta-row">
+                <div class="category-tag" id="answerCategoryTag">🌾 ಬೆಳೆ ನಿರ್ವಹಣೆ</div>
+                <div class="verification-badge">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="badge-icon">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  <span data-i18n="verifiedBadge">ಪರಿಶೀಲಿಸಿದ ಕೃಷಿ ಮಾಹಿತಿ</span>
+                </div>
+              </div>
+
+              <!-- Question Title -->
+              <h4 class="answer-title" id="answerTitle">ಉತ್ತರದ ಶೀರ್ಷಿಕೆ</h4>
+
+              <!-- Primary Answer Text in Kannada -->
+              <div class="answer-text-body">
+                <p id="answerTextPrimary" class="primary-kannada-text"></p>
+              </div>
+
+              <!-- English Translation Box (Collapsible/Toggled) -->
+              <div class="answer-translation-box" id="answerTranslationBox">
+                <div class="translation-header">
+                  <span class="translation-label">🇬🇧 English Reference:</span>
+                  <button class="toggle-en-btn" id="toggleEnBtn" type="button" data-i18n="hideEnglishBtn">ಮರೆಮಾಡಿ</button>
+                </div>
+                <p id="answerTextSecondary" class="secondary-english-text"></p>
+              </div>
+
+              <!-- Spoken Audio Controls Bar (Gnani Timbre / TTS) -->
+              <div class="voice-controls-bar">
+                <div class="voice-info">
+                  <span class="speaker-icon">🔊</span>
+                  <span class="voice-engine-label" id="voiceEngineLabel">Gnani Timbre Voice</span>
+                </div>
+                <div class="voice-buttons">
+                  <button class="btn-voice-play" id="playAudioBtn" type="button">
+                    <span class="play-icon">▶</span>
+                    <span class="play-text" data-i18n="speakBtn">ಧ್ವನಿಯಲ್ಲಿ ಕೇಳಿ</span>
+                  </button>
+                  <button class="btn-voice-stop" id="stopAudioBtn" type="button" hidden>
+                    <span class="stop-icon">■</span>
+                    <span class="stop-text" data-i18n="stopSpeakBtn">ನಿಲ್ಲಿಸಿ</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Official Source Citation Box -->
+              <div class="citation-box">
+                <div class="citation-header">
+                  <span class="citation-label" data-i18n="sourceLabel">ಅಧಿಕೃತ ಮೂಲ ಮತ್ತು ದಾಖಲೆ</span>
+                  <span class="citation-date" id="citationDate">2026-03</span>
+                </div>
+                <div class="citation-details">
+                  <span class="source-org" id="sourceOrgName">ICAR & UAS Bangalore</span>
+                  <a class="source-link" id="sourceExternalLink" href="#" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="openPortal">ಅಧಿಕೃತ ಪೋರ್ಟಲ್ ತೆರೆಯಿರಿ</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="link-svg">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                      <polyline points="15 3 21 3 21 9"/>
+                      <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Mandatory Agricultural Safety Disclaimer -->
+              <div class="safety-alert-box">
+                <div class="safety-icon-wrap">⚠️</div>
+                <div class="safety-content">
+                  <strong data-i18n="safetyAlertTitle">ಸುರಕ್ಷತಾ ಎಚ್ಚರಿಕೆ</strong>
+                  <p id="safetyAlertText">
+                    ಇದು ಸಾಮಾನ್ಯ ಕೃಷಿ ಮಾಹಿತಿ ಮಾತ್ರ. ಯಾವುದೇ ಕೀಟನಾಶಕ ಪ್ರಮಾಣ ಅಥವಾ ರಾಸಾಯನಿಕ ಬಳಕೆಯ ಮುನ್ನ ಕಡ್ಡಾಯವಾಗಿ ಸ್ಥಳೀಯ ಕೃಷಿ ಅಧಿಕಾರಿ ಅಥವಾ ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರದ (KVK) ಸಲಹೆ ಪಡೆಯಿರಿ.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Related Suggestions from Search Engine -->
+              <div class="related-queries-box" id="relatedQueriesBox">
+                <span class="related-title" data-i18n="relatedQueriesTitle">ಸಂಬಂಧಿತ ಇತರ ಪ್ರಶ್ನೆಗಳು:</span>
+                <div class="related-chips" id="relatedChips"></div>
+              </div>
+
+              <!-- Copy & Share Utilities -->
+              <div class="card-footer-utilities">
+                <button class="util-btn" id="copyAnswerBtn" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="util-icon">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                  <span id="copyBtnText" data-i18n="copyBtn">ಉತ್ತರ ನಕಲಿಸಿ</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <div class="answer-card">
-          <div class="card-top"><span class="step-number">02</span><span>ನಿಮ್ಮ ಉತ್ತರ</span><span class="answer-status" id="answerStatus">WAITING</span></div>
-          <div id="emptyAnswer" class="empty-answer"><div class="answer-illustration">✳</div><h3>ನಿಮ್ಮ ಉತ್ತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ</h3><p>ಮೊದಲು ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ. ನಿಮಗೆ ಅರ್ಥವಾಗುವ ಸರಳ ಭಾಷೆಯಲ್ಲಿ ಮಾಹಿತಿ ನೀಡಲು ನಾವು ಪ್ರಯತ್ನಿಸುತ್ತೇವೆ.</p></div>
-          <div id="answerContent" class="answer-content" hidden>
-            <div class="answer-label">KRISHIVOICE SUGGESTS</div>
-            <p id="answerText" class="answer-text"></p>
-            <div id="answerEnglish" class="answer-english" hidden></div>
-            <div class="source-box"><span>ಮಾಹಿತಿಯ ಮೂಲ</span><a id="sourceLink" target="_blank" rel="noopener">Source</a></div>
-            <p id="safetyText" class="safety-text"></p>
+
+        <!-- Session Conversation History -->
+        <div class="history-section" id="historySection">
+          <div class="history-header">
+            <div class="history-title-wrap">
+              <span class="history-icon">🕒</span>
+              <h3 class="history-title" data-i18n="historyTitle">ಈ ಅಧಿವೇಶನದ ಹಿಂದಿನ ಪ್ರಶ್ನೆಗಳು</h3>
+            </div>
+            <button class="btn-clear-history" id="clearHistoryBtn" type="button" data-i18n="clearHistoryBtn">ಇತಿಹಾಸ ತೆರವುಗೊಳಿಸಿ</button>
           </div>
-          <div class="answer-bottom"><span>ಕೃಷಿ ಸಲಹೆಗಾರರ ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿರುವ ಸಂದರ್ಭಗಳಿವೆ.</span><button id="speakBtn" disabled>🔊 ಕೇಳಿ</button></div>
+          <div class="history-list" id="historyList">
+            <div class="history-empty" data-i18n="historyEmpty">ಯಾವುದೇ ಹಿಂದಿನ ಪ್ರಶ್ನೆಗಳಿಲ್ಲ. ನೀವು ಕೇಳಿದ ಪ್ರಶ್ನೆಗಳು ಇಲ್ಲಿ ದಾಖಲಾಗುತ್ತವೆ.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Government Scheme Finder Teaser / Guide -->
+    <section class="schemes-preview-section" id="schemes">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-eyebrow" data-i18n="schemesEyebrow">GOVERNMENT WELFARE SCHEMES</span>
+          <h2 class="section-title" data-i18n="schemesTitle">ರೈತರಿಗಾಗಿ ಪ್ರಮುಖ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು</h2>
+          <p class="section-desc" data-i18n="schemesDesc">ಕರ್ನಾಟಕದ ರೈತರು ಪಡೆಯಬಹುದಾದ ಪ್ರಮುಖ ಸಹಾಯಧನ ಮತ್ತು ಆರ್ಥಿಕ ಭದ್ರತಾ ಯೋಜನೆಗಳು.</p>
+        </div>
+
+        <div class="schemes-grid">
+          <article class="scheme-card" data-scheme-query="ಪಿಎಂ ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ">
+            <div class="scheme-badge">ಕೇಂದ್ರ ಸರ್ಕಾರ</div>
+            <h3 class="scheme-name">ಪಿಎಂ-ಕಿಸಾನ್ (PM-KISAN)</h3>
+            <p class="scheme-summary">ಅರ್ಹ ರೈತ ಕುಟುಂಬಗಳಿಗೆ ವರ್ಷಕ್ಕೆ ₹6,000 ಆರ್ಥಿಕ ನೆರವು, 3 ಸಮಾನ ಕಂತುಗಳಲ್ಲಿ ನೇರ ಬ್ಯಾಂಕ್ ಜಮೆ.</p>
+            <div class="scheme-meta">
+              <span>ದಾಖಲೆಗಳು: ಆಧಾರ್, RTC, NPCI ಖಾತೆ</span>
+              <button class="scheme-ask-btn" data-query="ಪಿಎಂ ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ">ಮಾಹಿತಿ ಪಡೆಯಿರಿ →</button>
+            </div>
+          </article>
+
+          <article class="scheme-card" data-scheme-query="ಕರ್ನಾಟಕ ರೈತ ಸಿರಿ ಯೋಜನೆ">
+            <div class="scheme-badge karnataka-badge">ಕರ್ನಾಟಕ ಸರ್ಕಾರ</div>
+            <h3 class="scheme-name">ರೈತ ಸಿರಿ ಯೋಜನೆ</h3>
+            <p class="scheme-summary">ಸಿರಿಧಾನ್ಯ ಬೆಳೆಯುವ ರೈತರಿಗೆ ಪ್ರತಿ ಹೆಕ್ಟೇರ್‌ಗೆ ₹10,000 ವರೆಗೆ ನೇರ ಪ್ರೋತ್ಸಾಹ ಧನ (ಗರಿಷ್ಠ 2 ಹೆಕ್ಟೇರ್).</p>
+            <div class="scheme-meta">
+              <span>ಅರ್ಹತೆ: FRUITS ID, ಬೆಳೆ ಸಮೀಕ್ಷೆ</span>
+              <button class="scheme-ask-btn" data-query="ಕರ್ನಾಟಕ ರೈತ ಸಿರಿ ಯೋಜನೆ">ಮಾಹಿತಿ ಪಡೆಯಿರಿ →</button>
+            </div>
+          </article>
+
+          <article class="scheme-card" data-scheme-query="ಪ್ರಧಾನ ಮಂತ್ರಿ ಫಸಲ್ ಬಿಮಾ ಯೋಜನೆ ಬೆಳೆ ವಿಮೆ">
+            <div class="scheme-badge">ಬೆಳೆ ರಕ್ಷಣೆ</div>
+            <h3 class="scheme-name">ಫಸಲ್ ಬಿಮಾ ಯೋಜನೆ (PMFBY)</h3>
+            <p class="scheme-summary">ಬರ, ನೆರೆ, ಪ್ರಕೃತಿ ವಿಕೋಪದಿಂದ ಉಂಟಾಗುವ ಬೆಳೆ ಹಾನಿಗೆ ಸಮಗ್ರ ವಿಮಾ ರಕ್ಷಣೆ ಮತ್ತು ಪರಿಹಾರ.</p>
+            <div class="scheme-meta">
+              <span>ಪ್ರೀಮಿಯಂ: ಶೇ. 1.5 - ಶೇ. 2</span>
+              <button class="scheme-ask-btn" data-query="ಪ್ರಧಾನ ಮಂತ್ರಿ ಫಸಲ್ ಬಿಮಾ ಯೋಜನೆ ಬೆಳೆ ವಿಮೆ">ಮಾಹಿತಿ ಪಡೆಯಿರಿ →</button>
+            </div>
+          </article>
+
+          <article class="scheme-card" data-scheme-query="ಕರ್ನಾಟಕ ಕೃಷಿ ಭಾಗ್ಯ ಯೋಜನೆ">
+            <div class="scheme-badge karnataka-badge">ಕರ್ನಾಟಕ ಸರ್ಕಾರ</div>
+            <h3 class="scheme-name">ಕೃಷಿ ಭಾಗ್ಯ ಯೋಜನೆ</h3>
+            <p class="scheme-summary">ಕೃಷಿ ಹೊಂಡ, ಪಾಲಿಥೀನ್ ಹೊದಿಕೆ, ಡೀಸೆಲ್ ಪಂಪ್ ಮತ್ತು ತುಂತುರು ನೀರಾವರಿ ಘಟಕಕ್ಕೆ ಶೇ. 80-90 ಸಬ್ಸಿಡಿ.</p>
+            <div class="scheme-meta">
+              <span>ಅರ್ಜಿ: ರೈತ ಸಂಪರ್ಕ ಕೇಂದ್ರ</span>
+              <button class="scheme-ask-btn" data-query="ಕರ್ನಾಟಕ ಕೃಷಿ ಭಾಗ್ಯ ಯೋಜನೆ">ಮಾಹಿತಿ ಪಡೆಯಿರಿ →</button>
+            </div>
+          </article>
         </div>
       </div>
-      <p class="disclaimer">ಗಮನಿಸಿ: ಇದು ಮಾಹಿತಿ ಸಹಾಯಕ ಮಾತ್ರ. ಕೀಟನಾಶಕದ ಪ್ರಮಾಣ, ಔಷಧಿ ಅಥವಾ ಬೆಳೆ ಚಿಕಿತ್ಸೆಯ ನಿರ್ಧಾರಕ್ಕೆ ಸ್ಥಳೀಯ ಕೃಷಿ ತಜ್ಞರ ಸಲಹೆ ಪಡೆಯಿರಿ.</p>
     </section>
 
-    <section class="how-section" id="how">
-      <div class="eyebrow">SIMPLE BY DESIGN</div><h2>ಮೂರು ಸುಲಭ ಹಂತಗಳು.</h2>
-      <div class="steps"><article><span>01</span><div class="step-icon">🎙</div><h3>ಮಾತನಾಡಿ</h3><p>ನಿಮ್ಮ ಕೃಷಿ ಪ್ರಶ್ನೆಯನ್ನು ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ ಅಥವಾ ಟೈಪ್ ಮಾಡಿ.</p></article><article><span>02</span><div class="step-icon">✦</div><h3>ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ</h3><p>Gnani AI Prisma ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಪಠ್ಯವಾಗಿ ಪರಿವರ್ತಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.</p></article><article><span>03</span><div class="step-icon">🌱</div><h3>ಮಾಹಿತಿ ಪಡೆಯಿರಿ</h3><p>ಪರಿಶೀಲಿಸಿದ ಕೃಷಿ ಮಾಹಿತಿಯಿಂದ ಸರಳ ಉತ್ತರ ಮತ್ತು ಮೂಲಗಳನ್ನು ನೋಡಿ.</p></article></div>
+    <!-- Toll-Free Helpline Support Strip -->
+    <section class="helpline-section" id="helpline">
+      <div class="section-container">
+        <div class="helpline-card">
+          <div class="helpline-content">
+            <div class="helpline-badge">ಉಚಿತ ಸಹಾಯವಾಣಿ</div>
+            <h2 class="helpline-title" data-i18n="helplineTitle">ನೇರ ಕೃಷಿ ಅಧಿಕಾರಿಗಳೊಂದಿಗೆ ಮಾತನಾಡಿ</h2>
+            <p class="helpline-desc" data-i18n="helplineDesc">
+              ಸರ್ಕಾರದ ಕಿಸಾನ್ ಕಾಲ್ ಸೆಂಟರ್ ಮೂಲಕ ಬೆಳಿಗ್ಗೆ 6 ರಿಂದ ರಾತ್ರಿ 10 ರವರೆಗೆ ಕನ್ನಡದಲ್ಲೇ ಉಚಿತವಾಗಿ ಕೃಷಿ ವಿಜ್ಞಾನಿಗಳಿಂದ ಮಾರ್ಗದರ್ಶನ ಪಡೆಯಿರಿ.
+            </p>
+            <div class="helpline-contacts">
+              <a href="tel:18001801551" class="helpline-dial-btn">
+                <span class="phone-icon">📞</span>
+                <div>
+                  <small>ಕಿಸಾನ್ ಕಾಲ್ ಸೆಂಟರ್ (KCC)</small>
+                  <strong>1800-180-1551</strong>
+                </div>
+              </a>
+              <a href="tel:18004253553" class="helpline-dial-btn secondary">
+                <span class="phone-icon">🏛️</span>
+                <div>
+                  <small>ಕರ್ನಾಟಕ ಕೃಷಿ ಇಲಾಖೆ</small>
+                  <strong>1800-425-3553</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="helpline-graphic">
+            <div class="call-center-illustration">👩‍🌾 📞 👨‍🌾</div>
+            <span class="helpline-hours">ವಾರದ 7 ದಿನವೂ ಸೇವೆ ಲಭ್ಯ</span>
+          </div>
+        </div>
+      </div>
     </section>
-
-    <section class="about-strip" id="about"><div><div class="eyebrow">BUILT FOR BHARAT</div><h2>ತಂತ್ರಜ್ಞಾನ ಎಲ್ಲರಿಗೂ ತಲುಪಬೇಕು.</h2><p>KrishiVoice AI ಒಂದು ವಿದ್ಯಾರ್ಥಿ ನಿರ್ಮಿತ ಪ್ರೋಟೋಟೈಪ್. ಕನ್ನಡದಲ್ಲಿ ಕೃಷಿ ಮಾಹಿತಿಯನ್ನು ಸುಲಭವಾಗಿ ಪಡೆಯುವ ಅನುಭವವನ್ನು ಪರೀಕ್ಷಿಸುವುದು ನಮ್ಮ ಉದ್ದೇಶ.</p></div><div class="about-mark">ಕೃ<span>✳</span></div></section>
   </main>
-  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">ಕೃ</span><span>KrishiVoice <b>AI</b><small>ನಿಮ್ಮ ಕೃಷಿ, ನಿಮ್ಮ ಧ್ವನಿ</small></span></a><span>Student prototype · Built with care for farmers</span><span>© 2026 KrishiVoice AI</span></footer>
+
+  <!-- Clean, Accessible Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand-icon-wrapper small">
+            <span class="brand-kn-letter">ಕೃ</span>
+          </div>
+          <div>
+            <strong class="brand-name">KrishiVoice AI 2.0</strong>
+            <p class="footer-tagline">ನಿಮ್ಮ ಕೃಷಿ. ನಿಮ್ಮ ಧ್ವನಿ. ನಿಮ್ಮ ಭವಿಷ್ಯ.</p>
+          </div>
+        </div>
+        <div class="footer-links">
+          <a href="#assistant" data-i18n="footerAssistant">ಕೃಷಿ ಸಹಾಯಕ</a>
+          <a href="#topics" data-i18n="footerTopics">ವಿಷಯಗಳು</a>
+          <a href="#schemes" data-i18n="footerSchemes">ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು</a>
+          <a href="https://raitamitra.karnataka.gov.in/" target="_blank" rel="noopener">ರೈತ ಮಿತ್ರ ಪೋರ್ಟಲ್ ↗</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="disclaimer-text" data-i18n="footerDisclaimer">
+          ಗಮನಿಸಿ: KrishiVoice AI ಒಂದು ಕೃತಕ ಬುದ್ಧಿಮತ್ತೆ ಆಧಾರಿತ ಮಾಹಿತಿ ವೇದಿಕೆಯಾಗಿದೆ. ಯಾವುದೇ ಅಧಿಕೃತ ಬೆಳೆ ಚಿಕಿತ್ಸೆ, ಕೀಟನಾಶಕದ ಪ್ರಮಾಣ ಮತ್ತು ಸರ್ಕಾರಿ ಅನುದಾನದ ಅಂತಿಮ ನಿರ್ಧಾರಕ್ಕೆ ನಿಮ್ಮ ಸ್ಥಳೀಯ ಕೃಷಿ ಅಧಿಕಾರಿ/KVK ವಿಜ್ಞಾನಿಗಳ ಸಲಹೆ ಕಡ್ಡಾಯ.
+        </p>
+        <div class="footer-copy">
+          <span>© 2026 KrishiVoice AI 2.0. Built for Karnataka & Bharat.</span>
+          <span>Powered by Gnani.ai Prisma & Timbre</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <script src="/script.js"></script>
 </body>
 </html>
