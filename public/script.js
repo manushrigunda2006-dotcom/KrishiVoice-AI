@@ -9,9 +9,7 @@ const state = {
   isRecording: false,
   mediaRecorder: null,
   audioChunks: [],
-  speechRecognition: null,
   gnaniConfigured: false,
-  activeSpeechUtterance: null,
   currentAudioPlayer: null,
   history: [],
   currentAnswer: null
@@ -258,6 +256,72 @@ function setLanguage(lang) {
   });
 }
 
+// Convert audio Blob to 16kHz mono 16-bit PCM WAV in browser
+// Ensures 100% compatibility with Vercel serverless functions without requiring server FFmpeg
+async function convertBlobTo16kWav(rawBlob) {
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return rawBlob;
+
+    const arrayBuffer = await rawBlob.arrayBuffer();
+    const tempCtx = new AudioContextClass();
+    const audioBuffer = await tempCtx.decodeAudioData(arrayBuffer);
+    tempCtx.close();
+
+    const targetSampleRate = 16000;
+    const targetLength = Math.ceil(audioBuffer.duration * targetSampleRate);
+    if (targetLength <= 0) return rawBlob;
+
+    const OfflineCtxClass = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    const offlineCtx = new OfflineCtxClass(1, targetLength, targetSampleRate);
+    const source = offlineCtx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(offlineCtx.destination);
+    source.start(0);
+
+    const renderedBuffer = await offlineCtx.startRendering();
+    const pcmData = renderedBuffer.getChannelData(0);
+
+    // Build 16-bit PCM WAV header and data
+    const wavBuffer = new ArrayBuffer(44 + pcmData.length * 2);
+    const view = new DataView(wavBuffer);
+
+    function writeString(v, offset, str) {
+      for (let i = 0; i < str.length; i++) {
+        v.setUint8(offset + i, str.charCodeAt(i));
+      }
+    }
+
+    writeString(view, 0, "RIFF");
+    view.setUint32(4, 36 + pcmData.length * 2, true);
+    writeString(view, 8, "WAVE");
+
+    writeString(view, 12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, targetSampleRate, true);
+    view.setUint32(28, targetSampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+
+    writeString(view, 36, "data");
+    view.setUint32(40, pcmData.length * 2, true);
+
+    let offset = 44;
+    for (let i = 0; i < pcmData.length; i++) {
+      const s = Math.max(-1, Math.min(1, pcmData[i]));
+      view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+      offset += 2;
+    }
+
+    return new Blob([view], { type: "audio/wav" });
+  } catch (err) {
+    console.warn("Client WAV encoding skipped, using raw recording:", err);
+    return rawBlob;
+  }
+}
+
 // Check Backend Health & Gnani Configuration
 async function checkHealth() {
   const statusLabel = $("statusLabel");
@@ -274,9 +338,9 @@ async function checkHealth() {
       inputModeBadge.innerHTML = '<span class="mode-icon">🎙️</span><span class="mode-text">Gnani Prisma STT</span>';
       systemStatusPill.title = "Gnani Prisma Speech API Connected";
     } else {
-      statusLabel.textContent = "Web Speech ಸಕ್ರಿಯ (ಡೆಮೊ)";
-      inputModeBadge.innerHTML = '<span class="mode-icon">🎙️</span><span class="mode-text">Web Speech API</span>';
-      systemStatusPill.title = "Browser Speech API Active (Set GNANI_API_KEY in .env for Prisma)";
+      statusLabel.textContent = "Gnani API ಕೀ ಬಾಕಿ";
+      inputModeBadge.innerHTML = '<span class="mode-icon">🎙️</span><span class="mode-text">Gnani Prisma STT</span>';
+      systemStatusPill.title = "Configure GNANI_API_KEY in Vercel Settings → Environment Variables";
     }
   } catch (err) {
     statusLabel.textContent = "ಸ್ಥಳೀಯ ಮೋಡ್ (Offline)";
@@ -397,8 +461,11 @@ function initVoiceHandlers() {
     recordStatusTitle.textContent = "Gnani Prisma STT ಪರಿವರ್ತನೆ…";
     recordStatusHint.textContent = "Gnani AI ಸರ್ವರ್‌ನಲ್ಲಿ ಧ್ವನಿಯನ್ನು ಕನ್ನಡ ಪಠ್ಯವಾಗಿ ಪರಿವರ್ತಿಸಲಾಗುತ್ತಿದೆ…";
 
+    // Convert recorded audio to standard 16kHz mono 16-bit PCM WAV in browser
+    const wavBlob = await convertBlobTo16kWav(audioBlob);
+
     const formData = new FormData();
-    formData.append("audio", audioBlob, "recording.webm");
+    formData.append("audio", wavBlob, "recording.wav");
     const langCodes = { kn: "kn-IN", en: "en-IN", hi: "hi-IN", te: "te-IN", ta: "ta-IN" };
     formData.append("languageCode", langCodes[state.currentLang] || "kn-IN");
 
@@ -417,15 +484,11 @@ function initVoiceHandlers() {
         recordStatusHint.textContent = "Gnani Prisma ಪಠ್ಯ ಲಭ್ಯವಾಗಿದೆ. ಉತ್ತರ ಪಡೆಯಲಾಗುತ್ತಿದೆ…";
         // Complete Voice Interaction: Mic -> Prisma -> Transcript -> Answer -> Timbre
         submitQuestion(true);
-      } else if (data.fallbackMode) {
-        // Demo mode without key: fallback to browser Web Speech if available
-        recordStatusTitle.textContent = "ಡೆಮೊ ಮೋಡ್ ಸಕ್ರಿಯ";
-        recordStatusHint.textContent = "Gnani API ಕೀ ಸೇರಿಸಿಲ್ಲ. ದಯವಿಟ್ಟು .env ನಲ್ಲಿ GNANI_API_KEY ನಮೂದಿಸಿ.";
       } else {
-        // Gnani API error reporting
-        const errDetail = data.detail?.message || data.error || "ಧ್ವನಿ ಪರಿವರ್ತನೆ ವಿಫಲವಾಗಿದೆ";
-        recordStatusTitle.textContent = "Gnani STT ದೋಷ";
-        recordStatusHint.textContent = `${errDetail} (Status ${data.statusCode || response.status})`;
+        // Transparent error reporting (no fake mock responses)
+        const errMsg = data.error || "ಧ್ವನಿ ಪರಿವರ್ತನೆ ವಿಫಲವಾಗಿದೆ";
+        recordStatusTitle.textContent = data.code === "MISSING_API_KEY" ? "Gnani API ಕೀ ಅಗತ್ಯವಿದೆ" : "Gnani STT ದೋಷ";
+        recordStatusHint.textContent = errMsg;
       }
     } catch (err) {
       recordStatusTitle.textContent = "ಸಂಪರ್ಕ ದೋಷ";
@@ -619,8 +682,7 @@ function initTtsControls() {
       if (!response.ok) {
         const errPayload = await response.json().catch(() => ({}));
         const errMsg = errPayload.error || "Gnani Timbre ಧ್ವನಿ ಸಂಶ್ಲೇಷಣೆ ವಿಫಲವಾಯಿತು";
-        voiceEngineLabel.textContent = `Gnani Timbre ದೋಷ: ${errMsg}`;
-        alert(`Gnani Timbre TTS: ${errMsg}`);
+        voiceEngineLabel.textContent = `Gnani Timbre: ${errMsg}`;
         return;
       }
 

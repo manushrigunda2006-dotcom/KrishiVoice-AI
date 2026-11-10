@@ -140,14 +140,18 @@ function findAnswer(rawQuestion) {
 // Health check endpoint
 app.get("/api/health", (_req, res) => {
   const categories = [...new Set(knowledge.map(k => k.category))];
+  const configured = Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key");
   res.json({
     ok: true,
     appName: "KrishiVoice AI 2.0",
-    speechConfigured: Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key"),
-    ttsConfigured: Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key"),
+    speechConfigured: configured,
+    ttsConfigured: configured,
     knowledgeCount: knowledge.length,
     categories,
-    message: "KrishiVoice AI 2.0 server is running"
+    environment: process.env.VERCEL ? "vercel-production" : "local",
+    message: configured
+      ? "KrishiVoice AI 2.0 is fully configured with Gnani AI."
+      : "GNANI_API_KEY is not configured yet. Please configure it in Vercel Settings → Environment Variables."
   });
 });
 
@@ -164,6 +168,21 @@ app.get("/api/knowledge", (_req, res) => {
   }));
   res.json({ categories, topics: samplePrompts });
 });
+
+/**
+ * Check if the file is already a valid WAV file
+ */
+function isWav(filePath) {
+  try {
+    const fd = fs.openSync(filePath, "r");
+    const buf = Buffer.alloc(12);
+    fs.readSync(fd, buf, 0, 12, 0);
+    fs.closeSync(fd);
+    return buf.toString("ascii", 0, 4) === "RIFF" && buf.toString("ascii", 8, 12) === "WAVE";
+  } catch (_) {
+    return false;
+  }
+}
 
 /**
  * Convert arbitrary audio recording (WebM, OGG, MP4, etc.)
@@ -185,8 +204,7 @@ function convertAudioToWav(inputPath) {
 
     execFile("ffmpeg", args, (err, _stdout, stderr) => {
       if (err) {
-        console.error("FFmpeg conversion error:", stderr);
-        return reject(new Error("Audio format validation/conversion failed: " + stderr));
+        return reject(new Error("Audio format conversion not available: " + stderr));
       }
       resolve(outputPath);
     });
@@ -198,7 +216,7 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
   const hasKey = Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key");
   
   if (!req.file) {
-    return res.status(400).json({ error: "Please record or upload an audio file." });
+    return res.status(400).json({ ok: false, error: "Please record or upload an audio file." });
   }
 
   let convertedWavPath = null;
@@ -207,19 +225,24 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
   if (!hasKey) {
     if (originalPath) fs.promises.unlink(originalPath).catch(() => {});
     return res.status(401).json({
-      error: "Gnani API key is not configured. Please add GNANI_API_KEY to your .env file.",
-      speechConfigured: false,
-      detail: { message: "GNANI_API_KEY environment variable is missing or placeholder." }
+      ok: false,
+      error: "GNANI_API_KEY is not configured on the server. Please add your GNANI_API_KEY in Vercel Settings → Environment Variables.",
+      code: "MISSING_API_KEY",
+      speechConfigured: false
     });
   }
 
   try {
-    // 1. Audio format validation and conversion to 16kHz 16-bit mono WAV
-    try {
-      convertedWavPath = await convertAudioToWav(originalPath);
-    } catch (convErr) {
-      console.warn("WAV conversion failed, attempting raw upload:", convErr.message);
+    // 1. Audio format validation: If already WAV, use directly. Otherwise convert via FFmpeg if available.
+    if (isWav(originalPath)) {
       convertedWavPath = originalPath;
+    } else {
+      try {
+        convertedWavPath = await convertAudioToWav(originalPath);
+      } catch (convErr) {
+        console.warn("WAV conversion not available, attempting raw upload:", convErr.message);
+        convertedWavPath = originalPath;
+      }
     }
 
     const audioBytes = fs.readFileSync(convertedWavPath);
@@ -243,10 +266,13 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
 
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
-      const errMsg = payload?.detail?.message || payload?.message || payload?.error || "Gnani Prisma transcription request failed.";
+      let errMsg = payload?.detail?.message || payload?.message || payload?.error || "Gnani Prisma transcription request failed.";
+      if (response.status === 401) {
+        errMsg = "Gnani Authentication Failed: Invalid or expired API key. Please check your GNANI_API_KEY in Vercel Settings.";
+      }
       return res.status(response.status).json({
+        ok: false,
         error: errMsg,
-        detail: payload,
         statusCode: response.status
       });
     }
@@ -255,14 +281,13 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
     res.json({
       ok: true,
       transcript,
-      languageCode: req.body.languageCode || "kn-IN",
-      raw: payload
+      languageCode: req.body.languageCode || "kn-IN"
     });
   } catch (err) {
     console.error("Gnani Prisma STT error:", err);
     res.status(500).json({
-      error: "Could not reach Gnani speech service. Please check network connection and credentials.",
-      detail: err.message
+      ok: false,
+      error: "Could not reach Gnani speech service. Please check network connection and credentials: " + err.message
     });
   } finally {
     // Backend security: Ensure all temporary recordings are deleted immediately
@@ -280,18 +305,20 @@ app.post("/api/tts", async (req, res) => {
   const voice = req.body.voice || process.env.GNANI_TTS_VOICE || "Lakshmi";
 
   if (!text) {
-    return res.status(400).json({ error: "Text is required for TTS synthesis." });
+    return res.status(400).json({ ok: false, error: "Text is required for TTS synthesis." });
   }
 
   // Enforce text length limit (max 3000 chars per TTS request)
   if (text.length > 3000) {
-    return res.status(400).json({ error: "Text exceeds maximum limit of 3000 characters." });
+    return res.status(400).json({ ok: false, error: "Text exceeds maximum limit of 3000 characters." });
   }
 
   const hasKey = Boolean(process.env.GNANI_API_KEY && process.env.GNANI_API_KEY !== "replace_with_your_key");
   if (!hasKey) {
     return res.status(401).json({
-      error: "Gnani API key is not configured. Please add GNANI_API_KEY to your .env file to enable Gnani Timbre TTS.",
+      ok: false,
+      error: "GNANI_API_KEY is not configured on the server. Please add your GNANI_API_KEY in Vercel Project Settings → Environment Variables to enable spoken answers.",
+      code: "MISSING_API_KEY",
       ttsConfigured: false
     });
   }
@@ -323,9 +350,13 @@ app.post("/api/tts", async (req, res) => {
 
     if (!response.ok) {
       const errPayload = await response.json().catch(() => ({}));
+      let errMsg = errPayload?.detail?.message || errPayload?.message || errPayload?.error || "Gnani Timbre TTS request failed.";
+      if (response.status === 401) {
+        errMsg = "Gnani Authentication Failed: Invalid or expired API key. Please check your GNANI_API_KEY in Vercel Settings.";
+      }
       return res.status(response.status).json({
-        error: errPayload?.detail?.message || errPayload?.message || "Gnani Timbre TTS request failed.",
-        detail: errPayload,
+        ok: false,
+        error: errMsg,
         statusCode: response.status
       });
     }
@@ -350,6 +381,7 @@ app.post("/api/tts", async (req, res) => {
   } catch (err) {
     console.error("Gnani Timbre TTS error:", err);
     res.status(500).json({
+      ok: false,
       error: "Could not reach Gnani Timbre TTS service: " + err.message
     });
   }

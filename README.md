@@ -69,7 +69,7 @@
   ```json
   {
     "text": "ರಾಗಿ ಬಿತ್ತನೆಗೆ ಜುಲೈ-ಆಗಸ್ಟ್ ತಿಂಗಳು ಅತ್ಯಂತ ಸೂಕ್ತ...",
-    "voice": "Nalini",
+    "voice": "Lakshmi",
     "model": "timbre-v3.0",
     "language": "kn",
     "speed": 1.0,
@@ -81,6 +81,7 @@
     }
   }
   ```
+- **Voice Support**: `timbre-v3.0` supports the high-fidelity Kannada female voice **`Lakshmi`** (as well as `Kalpana`, `Chetana`, `Shivani`, and male voices `Avinash`, `Prakash`).
 - **Response Parsing**: Server streams the binary WAV audio directly to the client as `audio/wav`.
 - **Playback Controls**: The UI provides responsive Play and Stop buttons, active audio visualizer indicators, and error reporting. (Browser speech synthesis is strictly not used as a substitute for Gnani Timbre).
 
@@ -98,7 +99,7 @@ Set your credentials in `.env`:
 PORT=3000
 
 # Your official Gnani API key from https://api.vachana.ai
-GNANI_API_KEY=your_actual_api_key_here
+GNANI_API_KEY=replace_with_your_key
 
 # Gnani Prisma STT Endpoint & Model
 GNANI_STT_URL=https://api.vachana.ai/stt/v3
@@ -106,8 +107,31 @@ GNANI_STT_MODEL=prisma-v3.0
 
 # Gnani Timbre TTS Endpoint & Voice
 GNANI_TTS_URL=https://api.vachana.ai/api/v1/tts/inference
-GNANI_TTS_VOICE=Nalini
+GNANI_TTS_VOICE=Lakshmi
 ```
+
+---
+
+## Vercel Production Deployment & Configuration
+
+The application is deployed on Vercel at [https://krishivoice-ai.vercel.app](https://krishivoice-ai.vercel.app).
+
+### Adding GNANI_API_KEY on Vercel:
+1. Go to your [Vercel Dashboard](https://vercel.com/dashboard).
+2. Select the **`krishivoice-ai`** project.
+3. Navigate to **Settings** → **Environment Variables**.
+4. Click **Add New Variable**:
+   - **Key**: `GNANI_API_KEY`
+   - **Value**: `vach_...` *(your secret Gnani API key)*
+   - **Environments**: Select `Production`, `Preview`, and `Development`.
+5. Click **Save**.
+6. Trigger a redeployment or deploy via CLI (`vercel --prod`) to apply the environment variable.
+
+### Zero-Exposure Security:
+- `GNANI_API_KEY` is read **strictly server-side** via `process.env.GNANI_API_KEY`.
+- No credentials exist in client-side HTML, CSS, JavaScript bundles, or git-tracked source files.
+- The `/api/health` endpoint returns only boolean flags (`speechConfigured: true/false`), never leaking API keys.
+- Temporary audio files are safely cleaned up after every request.
 
 ---
 
